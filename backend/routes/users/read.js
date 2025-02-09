@@ -8,8 +8,6 @@ export const getUsers = async (_req, res) => {
       select: "bankName accNo accName",
     });
 
-    console.log(users);
-
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Users fetched successfully",
       success: true,
