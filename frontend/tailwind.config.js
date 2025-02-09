@@ -5,6 +5,10 @@ export default {
     extend: {
       colors: {
         main: "#7da15b",
+        bgColor: "#134E5E",
+        textColor: "#134E5E",
+        hoverColor: "#0F2E3D",
+        transitionColor: "#71C9CE",
       },
     },
   },
