@@ -1,4 +1,4 @@
-import HTTP_STATUS_CODE from "../utils/status.codes";
+import HTTP_STATUS_CODE from "../utils/status.codes.js";
 
 const validateUser = async (req, res, next) => {
   try {
