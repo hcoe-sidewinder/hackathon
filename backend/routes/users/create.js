@@ -24,7 +24,7 @@ const addUser = async (req, res) => {
 
     const panAlreadyExists = await User.findOne({
       panNo: userDetails.panNumber,
-    });
+    }).select({ panNo: 1, _id: 0 });
 
     if (panAlreadyExists) {
       return res
@@ -32,7 +32,9 @@ const addUser = async (req, res) => {
         .json({ message: "Duplicate Pan no", success: false });
     }
 
-    const emailAlreadyExists = await User.findOne({ email: userDetails.email });
+    const emailAlreadyExists = await User.findOne({
+      email: userDetails.email,
+    }).select({ email: 1, _id: 0 });
 
     if (emailAlreadyExists) {
       return res

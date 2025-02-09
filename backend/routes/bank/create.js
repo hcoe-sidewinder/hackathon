@@ -6,7 +6,10 @@ const addBank = async ({ bankName, accNo, accName }) => {
       throw "Bank Name or Accont Name or Account Number is not available";
     }
 
-    const accNoAlreadyExists = await Bank.findOne({ accNo: accNo });
+    const accNoAlreadyExists = await Bank.findOne({ accNo: accNo }).select({
+      accNo: 1,
+      _id: 0,
+    });
 
     if (accNoAlreadyExists) {
       throw "Account no already exists";
