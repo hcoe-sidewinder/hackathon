@@ -1,4 +1,3 @@
-import { FaFacebook, FaGoogle } from "react-icons/fa";
 import loginImage from "../assets/loginImage.svg";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -8,7 +7,7 @@ import axios from "axios";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
-    email: "",
+    panNumber: "",
     password: "",
   });
 
@@ -21,8 +20,8 @@ const LoginPage = () => {
     e.preventDefault();
 
     // Check if both email and password are provided
-    if (!user.email || !user.password) {
-        toast.error("Please enter both email and password.");
+    if (!user.panNumber || !user.password) {
+      toast.error("Please enter both email and password.");
       return;
     }
 
@@ -32,12 +31,12 @@ const LoginPage = () => {
         user
       );
 
-      // Save the authentication token in localStorage
-      localStorage.setItem("auth_token", response.data.token);
-
-      toast.success("Login successful!");
-
-      navigate("/home");
+      if (response.data.success) {
+        // Save the authentication token in localStorage
+        localStorage.setItem("auth_token", response.data.token);
+        toast.success("Login successful!");
+        navigate("/home");
+      }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -61,14 +60,14 @@ const LoginPage = () => {
           <form onSubmit={loginHandler} className="flex flex-col gap-4">
             {/* Email Field */}
             <div className="flex flex-col gap-1">
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email">Pan Number</label>
               <input
-                id="email"
+                id="panNumber"
                 className="border border-gray-200 h-9 rounded-md p-2"
-                type="email"
+                type="number"
                 required
-                name="email"
-                value={user.email}
+                name="panNumber"
+                value={user.panNumber}
                 onChange={changeEventHandler}
               />
             </div>
@@ -100,20 +99,6 @@ const LoginPage = () => {
               Login
             </button>
             {/* Divider */}
-            <div className="flex items-center justify-between">
-              <hr className="w-[39%]" />
-              <p className="text-gray-300">or login with</p>
-              <hr className="w-[39%]" />
-            </div>
-            {/* Social Buttons */}
-            <div className="flex gap-3">
-              <button className="flex text-blue-600 border border-blue-600 flex-grow gap-3 items-center justify-center p-2 rounded-lg font-semibold text-lg">
-                <FaFacebook size={30} /> <span>Facebook</span>
-              </button>
-              <button className="flex text-red-500 border border-red-500 flex-grow gap-3 items-center justify-center p-2 rounded-lg font-semibold text-lg">
-                <FaGoogle size={30} /> <span>Google</span>
-              </button>
-            </div>
           </form>
         </div>
         {/* Image Section */}
