@@ -15,7 +15,7 @@ const validateUser = async (req, res, next) => {
     let payload;
 
     try {
-      payload = jwt.verify(token, SECRETKEY);
+      payload = jwt.verify(accessToken, SECRETKEY);
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
         console.error(`Token expired: ${error}`);
