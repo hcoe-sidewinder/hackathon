@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    email: {
+    panNo: {
       type: String,
       unique: true,
       required: true,
@@ -13,9 +13,35 @@ const userSchema = new mongoose.Schema(
       require: true,
     },
 
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+
     password: {
       type: String,
       require: true,
+    },
+
+    bankId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Bank",
+      require: true,
+    },
+
+    phNo: {
+      type: String,
+    },
+
+    panImg: {
+      type: String,
+      require: true,
+    },
+
+    profilePic: {
+      type: String,
+      require: false,
     },
   },
   { timestamps: true },

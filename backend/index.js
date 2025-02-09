@@ -3,6 +3,7 @@ import cors from "cors";
 
 import connectDB from "./utils/connect.db.js";
 import userRouter from "./routes/users.js";
+import bankRouter from "./routes/banks.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ connectDB();
 
 // Routes
 app.use("/api/user", userRouter);
+app.use("/api/bank", bankRouter);
 
 // network port and server
 const PORT = Number(process.env.PORT) || 8080;
