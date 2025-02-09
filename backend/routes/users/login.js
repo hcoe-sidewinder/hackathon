@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import User from "../../models/user/user.schema.js";
+import User from "../../models/user.schema.js";
 
 import HTTP_STATUS_CODE from "../../utils/status.codes.js";
 import { SECRET_KEY } from "../../utils/constants.js";

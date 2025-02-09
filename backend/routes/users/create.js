@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-import User from "../../models/user/user.schema.js";
+import User from "../../models/user.schema.js";
 import validateEmail from "../../middleware/email.validate.js";
 
 import HTTP_STATUS_CODE from "../../utils/status.codes.js";

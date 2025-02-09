@@ -1,4 +1,4 @@
-import User from "../../models/user/user.schema.js";
+import User from "../../models/user.schema.js";
 import HTTP_STATUS_CODE from "../../utils/status.codes.js";
 
 export const getUsers = async (_req, res) => {
