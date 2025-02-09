@@ -1,6 +1,6 @@
-// import axios from "axios";
+import axios from "axios";
 import { useState } from "react";
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import signupImage from "../assets/signupImage.svg";
 import { useRef } from "react";
@@ -9,7 +9,7 @@ import { DataURL } from "../utils/dataurl";
 const SignupPage = () => {
   const panImageRef = useRef();
   const profileImageRef = useRef();
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     fullName: "",
     email: "",
@@ -59,6 +59,7 @@ const SignupPage = () => {
       !user.confirmPassword ||
       !user.companyName ||
       !user.phoneNumber ||
+      !user.panNumber ||
       !user.bankAccountNumber ||
       !user.bankName ||
       !user.accountName
@@ -89,25 +90,25 @@ const SignupPage = () => {
       console.log(key, value);
     });
 
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8080/api/signup",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //       withCredentials: true,
-    //     }
-    //   );
-    //   if (response.data.success) {
-    //     toast.success(response.data.message);
-    //     navigate("/login");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error(error.response.data.message);
-    // }
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}user/register`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (

@@ -6,10 +6,13 @@ import validateEmail from "../../middleware/email.validate.js";
 import HTTP_STATUS_CODE from "../../utils/status.codes.js";
 import { SALT } from "../../utils/constants.js";
 import addBank from "../bank/create.js";
+import cloudinary from "../../utils/cloudinary.js";
 
 const addUser = async (req, res) => {
   try {
     const userDetails = req.body;
+    const profilePicture = req.files["profilePicture"]?.[0];
+    const panImage = req.files["panImage"]?.[0];
 
     if (!validateEmail(userDetails.email)) {
       return res
@@ -17,7 +20,9 @@ const addUser = async (req, res) => {
         .json({ message: "Not a valid userDetails.email", success: false });
     }
 
-    const panAlreadyExists = await User.findOne({ panNo: userDetails.panNo });
+    const panAlreadyExists = await User.findOne({
+      panNo: userDetails.panNumber,
+    });
 
     if (panAlreadyExists) {
       return res
@@ -32,11 +37,28 @@ const addUser = async (req, res) => {
         .status(HTTP_STATUS_CODE.INVALID)
         .json({ message: "Email already exists", success: false });
     }
+    const convertToDataURI = (file) => {
+      if (!file) return null;
+      const fileBuffer = fs.readFileSync(file.path);
+      return `data:${file.mimetype};base64,${fileBuffer.toString("base64")}`;
+    };
+
+    const profileImageURI = convertToDataURI(profilePicture);
+    const panImageURI = convertToDataURI(panImage);
+    let cloudResponseProfile;
+    let cloudResponsePan;
+    try {
+      cloudResponseProfile = await cloudinary.uploader.upload(profileImageURI);
+      cloudResponsePan = await cloudinary.uploader.upload(panImageURI);
+    } catch (error) {
+      console.log("cannot upload images", error);
+      throw error;
+    }
 
     const bank = await addBank({
       bankName: userDetails.bankName,
-      accNo: userDetails.accNo,
-      accName: userDetails.accName,
+      accNo: userDetails.bankAccountNumber,
+      accName: userDetails.accountName,
     });
 
     console.log(bank);
@@ -49,16 +71,18 @@ const addUser = async (req, res) => {
 
     userDetails.password = await bcrypt.hash(userDetails.password, SALT);
 
+    console.log(cloudResponsePan);
+    console.log(cloudResponseProfile);
     try {
       await User.create({
-        panNo: userDetails.panNo,
-        name: userDetails.name,
+        panNo: userDetails.panNumber,
+        name: userDetails.fullName,
         email: userDetails.email,
         password: userDetails.password,
-        phNo: userDetails.phNo,
-        panImg: userDetails.panImg,
-        profilePic: userDetails.profilePic,
-        bankId: bank.id,
+        phNo: userDetails.phoneNumber,
+        panImg: cloudResponsePan.secure_url,
+        profilePic: cloudResponseProfile.secure_url,
+        bankId: bank._id,
       });
 
       return res.status(HTTP_STATUS_CODE.OK).json({
