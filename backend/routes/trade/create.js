@@ -1,4 +1,4 @@
-import HTTP_STATUS_CODE from "../../utils/status.codes";
+import HTTP_STATUS_CODE from "../../utils/status.codes.js";
 
 import Trade from "../../models/trade.schema.js";
 import Phase from "../../models/phase.schema.js";
