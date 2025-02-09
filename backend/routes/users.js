@@ -2,7 +2,7 @@ import express from "express";
 
 import login from "./users/login.js";
 import addUser from "./users/create.js";
-import { getUsers } from "./users/read.js";
+import { getUsers, getUserById } from "./users/read.js";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", getUsers);
 
 //get user by id
-//router.get("/:userId(\\d+)", getUsersById);
+router.get("/:userId(\\w+)", getUserById);
 
 // add user
 router.post("/register", addUser);
