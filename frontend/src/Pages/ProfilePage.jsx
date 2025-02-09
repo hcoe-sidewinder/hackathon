@@ -9,8 +9,8 @@ const ProfilePage = ({ user }) => {
       className={`mt-6 p-4 rounded-md transition-all duration-300 ease-in-out
         ${
           activeSection === title
-            ? "bg-white/90 shadow-lg"
-            : "bg-white/60 hover:bg-white/80"
+            ? "bg-activeCardColor shadow-lg"
+            : "bg-inactiveCardColor hover:bg-activeCardColor"
         }
         cursor-pointer relative overflow-hidden`}
       onClick={() => setActiveSection(activeSection === title ? null : title)}
@@ -51,7 +51,7 @@ const ProfilePage = ({ user }) => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-bgColor to-transitionColor p-6">
-      <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-4xl p-8 transition-all duration-300 hover:shadow-2xl">
+      <div className="bg-cardColor backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-4xl p-8 transition-all duration-300 hover:shadow-2xl">
       
         {/* for profile picture */}
         <div className="flex items-center gap-6 border-b pb-6 group">
@@ -65,7 +65,7 @@ const ProfilePage = ({ user }) => {
           </div>
           <div className="transform transition-all duration-300 group-hover:translate-x-2">
             <h2 className="text-3xl font-bold text-[#134E5E] mb-1">
-              {user.userName}
+              {user.fullName}
             </h2>
             <p className="text-gray-600 text-sm">{user.email}</p>
           </div>

@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import ProfilePage from "./Pages/ProfilePage";
-import { sampleUser } from "./assets/sampleData";
-import SignupPage from "./Pages/SignupPage";
+import { sampleDonation, sampleUser } from "./assets/sampleData";
+import DonationDetail from "./Pages/DonationDetail";
 
 const App = () => {
   return (
@@ -14,6 +14,10 @@ const App = () => {
         <Route
           path="/profile"
           element={<ProfilePage user={sampleUser} />}
+        ></Route>
+        <Route
+          path="/donation-detail"
+          element={<DonationDetail donation={sampleDonation} onBack={()=>navigate("/home")}/>} 
         ></Route>
       </Routes>
     </BrowserRouter>
