@@ -47,9 +47,10 @@ const login = async (req, res) => {
       name: loginUser.name,
       panNo: loginUser.panNo,
       email: loginUser.email,
-      bankId: loginUser.bankId,
+      nob: loginUser.nob,
       phNo: loginUser.phNo,
       profilePic: loginUser.profilePic,
+      bankId: loginUser.bankId,
     };
 
     //put token in cookie and then pass the cookie

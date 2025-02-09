@@ -13,8 +13,6 @@ const addUser = async (req, res) => {
     const userDetails = req.body;
     const profilePicture = req.files["profilePicture"]?.[0];
     const panImage = req.files["panImage"]?.[0];
-    console.log(profilePicture);
-    console.log(panImage);
 
     if (!validateEmail(userDetails.email)) {
       return res
@@ -41,6 +39,7 @@ const addUser = async (req, res) => {
         .status(HTTP_STATUS_CODE.INVALID)
         .json({ message: "Email already exists", success: false });
     }
+
     const convertToDataURI = (file) => {
       if (!file || !file.buffer) {
         console.log("File buffer is missing or file is undefined");
@@ -51,13 +50,14 @@ const addUser = async (req, res) => {
 
     const profileImageURI = convertToDataURI(profilePicture);
     const panImageURI = convertToDataURI(panImage);
+
     let cloudResponseProfile;
     let cloudResponsePan;
     try {
       cloudResponseProfile = await cloudinary.uploader.upload(profileImageURI);
       cloudResponsePan = await cloudinary.uploader.upload(panImageURI);
     } catch (error) {
-      console.log("cannot upload images", error);
+      console.log(`Cannot upload images: ${error}`);
       throw error;
     }
 
@@ -67,8 +67,6 @@ const addUser = async (req, res) => {
       accName: userDetails.accountName,
     });
 
-    console.log(bank);
-
     if (!bank) {
       return res
         .status(HTTP_STATUS_CODE.INVALID)
@@ -77,8 +75,6 @@ const addUser = async (req, res) => {
 
     userDetails.password = await bcrypt.hash(userDetails.password, SALT);
 
-    console.log(cloudResponsePan);
-    console.log(cloudResponseProfile);
     try {
       await User.create({
         panNo: userDetails.panNumber,

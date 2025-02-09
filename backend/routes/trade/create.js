@@ -60,7 +60,7 @@ const addTrade = async (req, res) => {
       }),
     );
 
-    const trade = await Trade.create({
+    await Trade.create({
       doneeId: userId,
       nob: tradeBody.nob,
       totalAmount: tradeBody.totalAmount,

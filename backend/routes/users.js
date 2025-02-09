@@ -20,7 +20,7 @@ router.post(
     { name: "profilePicture", maxCount: 1 },
     { name: "panImage", maxCount: 1 },
   ]),
-  addUser
+  addUser,
 );
 
 // edit user by id
