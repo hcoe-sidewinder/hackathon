@@ -9,6 +9,9 @@ const app = express();
 
 // to make app understant JSON
 app.use(express.json());
+
+// to parse cookie
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
