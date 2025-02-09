@@ -33,3 +33,13 @@ content-type: application/json
 }
 
 ###
+# @name login
+
+POST http://localhost:8080/api/user/login
+accept: application/json
+content-type: application/json
+
+{
+  "panNo": "2108937138904723",
+  "password": "test"
+}
