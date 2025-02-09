@@ -1,0 +1,28 @@
+###
+# @nam getUsers
+
+GET http://localhost:8080/api/user/
+accept: application/json
+content-type: application/json
+
+###
+# @name register
+
+POST http://localhost:8080/api/user/register
+accept: application/json
+content-type: application/json
+
+{
+  "panNo": "2108937138904723",
+  "name": "Anshu Gahire",
+  "email": "test@test.com",
+  "password": "test",
+  "phNo": "3298489",
+  "panImg": "askdhasjd",
+  "profilePic": "asldkjas",
+  "bankName": "Global IME Bank",
+  "accNo": "39842398472398",
+  "accName": "Anshu Gahire"
+}
+
+###

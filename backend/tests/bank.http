@@ -1,0 +1,8 @@
+###
+# @name getBanks
+
+GET http://localhost:8080/api/bank/
+accept: application/json
+content-type: application/json
+
+###
