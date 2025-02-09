@@ -55,6 +55,7 @@ const addUser = async (req, res) => {
         name: userDetails.name,
         email: userDetails.email,
         password: userDetails.password,
+        nob: userDetails.nob,
         phNo: userDetails.phNo,
         panImg: userDetails.panImg,
         profilePic: userDetails.profilePic,
