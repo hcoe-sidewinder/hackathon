@@ -2,18 +2,24 @@ import mongoose from "mongoose";
 
 const phaseSchema = new mongoose.Schema(
   {
-    state: {
-      type: Int32,
-      require: true,
+    phase: {
+      type: Number,
+      required: true,
+      enum: [1, 2, 3, 4, 5],
     },
 
     amount: {
       type: Number,
-      require: true,
+      required: true,
     },
 
     boqImage: {
-      type: [String],
+      type: String,
+    },
+
+    completed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },

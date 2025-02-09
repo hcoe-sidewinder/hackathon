@@ -83,6 +83,7 @@ const addUser = async (req, res) => {
         name: userDetails.fullName,
         email: userDetails.email,
         password: userDetails.password,
+        nob: userDetails.nob,
         phNo: userDetails.phoneNumber,
         panImg: cloudResponsePan.secure_url,
         profilePic: cloudResponseProfile.secure_url,

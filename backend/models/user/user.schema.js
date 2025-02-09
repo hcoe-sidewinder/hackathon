@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema(
       require: true,
     },
 
+    nob: {
+      type: String,
+      require: true,
+    },
+
     bankId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Bank",
