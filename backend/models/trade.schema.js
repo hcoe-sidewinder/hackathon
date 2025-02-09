@@ -15,7 +15,7 @@ const tradeSchema = new mongoose.Schema(
     },
 
     phaseId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Phase",
       require: false,
     },
@@ -39,11 +39,6 @@ const tradeSchema = new mongoose.Schema(
       type: String,
       require: true,
       unique: true,
-    },
-
-    totalPhase: {
-      type: Int32,
-      require: true,
     },
   },
   { timestamps: true },
