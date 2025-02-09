@@ -2,6 +2,7 @@ import express from "express";
 
 import validateUser from "../middleware/user.validate.js";
 import addTrade from "./trade/create.js";
+import setDonor from "./trade/update.js";
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ const router = express.Router();
 router.post("/add", validateUser, addTrade);
 
 // edit trade by id
-//router.put("/edit/:userId(\\d+)", editUser);
+router.put("/:tradeId(\\w+)/pledge", validateUser, setDonor);
 
 // delete trade by id
 //router.delete("/delete/:userId(\\d+)", deleteUser);
