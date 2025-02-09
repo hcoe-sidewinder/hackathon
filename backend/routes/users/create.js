@@ -13,6 +13,8 @@ const addUser = async (req, res) => {
     const userDetails = req.body;
     const profilePicture = req.files["profilePicture"]?.[0];
     const panImage = req.files["panImage"]?.[0];
+    console.log(profilePicture);
+    console.log(panImage);
 
     if (!validateEmail(userDetails.email)) {
       return res
@@ -38,9 +40,11 @@ const addUser = async (req, res) => {
         .json({ message: "Email already exists", success: false });
     }
     const convertToDataURI = (file) => {
-      if (!file) return null;
-      const fileBuffer = fs.readFileSync(file.path);
-      return `data:${file.mimetype};base64,${fileBuffer.toString("base64")}`;
+      if (!file || !file.buffer) {
+        console.log("File buffer is missing or file is undefined");
+        return null;
+      }
+      return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
     };
 
     const profileImageURI = convertToDataURI(profilePicture);

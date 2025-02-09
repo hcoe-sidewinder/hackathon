@@ -27,13 +27,19 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/login",
-        user
+        `${import.meta.env.VITE_API_URL}user/login`,
+        user,
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
 
       if (response.data.success) {
         // Save the authentication token in localStorage
-        localStorage.setItem("auth_token", response.data.token);
+        localStorage.setItem("auth_token", response.data.accessToken);
         toast.success("Login successful!");
         navigate("/home");
       }
@@ -52,7 +58,7 @@ const LoginPage = () => {
             <span className="font-semibold text-3xl">Login</span>
             <p className="text-gray-300">
               Don&apos;t have an account?{" "}
-              <a className="text-blue-500" href="#">
+              <a className="text-blue-500" href="/signup">
                 Sign Up
               </a>
             </p>

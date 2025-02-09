@@ -8,16 +8,16 @@ import { SECRET_KEY } from "../../utils/constants.js";
 
 const login = async (req, res) => {
   try {
-    const { panNo, password } = req.body;
+    const { panNumber, password } = req.body;
 
-    if (!panNo || !password) {
+    if (!panNumber || !password) {
       return res.status(HTTP_STATUS_CODE.INVALID).json({
         message: "All fields should be filled",
         success: false,
       });
     }
 
-    const loginUser = await User.findOne({ panNo });
+    const loginUser = await User.findOne({ panNo: panNumber });
     if (!loginUser) {
       return res.status(HTTP_STATUS_CODE.NOT_FOUND).json({
         message: "User does not exist",
@@ -46,6 +46,10 @@ const login = async (req, res) => {
     const passUser = {
       name: loginUser.name,
       panNo: loginUser.panNo,
+      email: loginUser.email,
+      bankId: loginUser.bankId,
+      phNo: loginUser.phNo,
+      profilePic: loginUser.profilePic,
     };
 
     //put token in cookie and then pass the cookie
