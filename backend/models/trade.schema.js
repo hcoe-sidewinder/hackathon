@@ -5,40 +5,39 @@ const tradeSchema = new mongoose.Schema(
     doneeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: true,
+      required: true,
     },
 
     donorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      require: false,
+      required: false,
     },
 
     phaseId: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Phase",
-      require: false,
+      required: false,
     },
 
     nob: {
       type: String,
-      require: true,
+      required: true,
     },
 
     totalAmount: {
       type: Number,
-      require: true,
+      required: true,
     },
 
     desc: {
       type: String,
-      require: true,
+      required: true,
     },
 
     panNo: {
       type: String,
-      require: true,
-      unique: true,
+      required: true,
     },
   },
   { timestamps: true },

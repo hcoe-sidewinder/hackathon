@@ -4,18 +4,18 @@ const bankSchema = new mongoose.Schema(
   {
     bankName: {
       type: String,
-      require: true,
+      required: true,
     },
 
     accNo: {
       type: String,
       unique: true,
-      require: true,
+      required: true,
     },
 
     accName: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   { timestamps: true },

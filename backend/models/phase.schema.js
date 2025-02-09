@@ -4,13 +4,13 @@ const phaseSchema = new mongoose.Schema(
   {
     phase: {
       type: Number,
-      require: true,
+      required: true,
       enum: [1, 2, 3, 4, 5],
     },
 
     amount: {
       type: Number,
-      require: true,
+      required: true,
     },
 
     boqImage: {
