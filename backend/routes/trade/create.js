@@ -9,13 +9,6 @@ const addTrade = async (req, res) => {
     const userId = req.locals.userId;
 
     switch (true) {
-      case !tradeBody.donorId:
-        console.log(`Missing donor id`);
-        return res.status(HTTP_STATUS_CODE.INVALID).json({
-          message: "Missing donor id",
-          success: false,
-        });
-
       case !tradeBody.nob:
         console.log(`Missing name of business`);
         return res.status(HTTP_STATUS_CODE.INVALID).json({
@@ -55,24 +48,30 @@ const addTrade = async (req, res) => {
         break;
     }
 
-    tradeBody.phases = tradeBody.phases.map(async (item, _index, _array) => {
-      const phase = await Phase.create({
-        state: item.state,
-        amount: item.amount,
-        boqImage: item.boqImage,
-      });
+    tradeBody.phases = await Promise.all(
+      tradeBody.phases.map(async (item) => {
+        const phase = await Phase.create({
+          phase: item.phase,
+          amount: item.amount,
+          boqImage: item.boqImage,
+        });
 
-      return phase._id;
-    });
+        return phase._id;
+      }),
+    );
 
-    await Trade.create({
-      donorId: tradeBody.donorId,
+    const trade = await Trade.create({
+      doneeId: userId,
       nob: tradeBody.nob,
       totalAmount: tradeBody.totalAmount,
       desc: tradeBody.desc,
       panNo: tradeBody.panNo,
-      phases: tradeBody.phases,
+      phaseId: tradeBody.phases,
     });
+
+    return res
+      .status(HTTP_STATUS_CODE.OK)
+      .json({ message: "Trade created successfully", success: true });
   } catch (error) {
     console.log(`Cannot create trade: ${error}`);
     return res.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({

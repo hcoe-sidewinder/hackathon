@@ -12,7 +12,7 @@ const router = express.Router();
 //router.get("/:tradeId(\\w+)", getUsersById);
 
 // add trade
-router.post("/register", validateUser, addTrade);
+router.post("/add", validateUser, addTrade);
 
 // edit trade by id
 //router.put("/edit/:userId(\\d+)", editUser);
