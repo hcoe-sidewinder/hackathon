@@ -7,6 +7,7 @@ import PaymentPage from "./Pages/PaymentPage";
 import SignupPage from "./Pages/SignupPage";
 import HomePage from "./Pages/HomePage";
 import DonateePage from "./Pages/DonateePage";
+import ChatBot from "./Pages/ChatBot";
 
 const App = () => {
   return (
@@ -32,8 +33,8 @@ const App = () => {
 
         <Route path="/home" element={<HomePage />} />
         <Route path="/donatee" element={<DonateePage />} />
-
         <Route path="/donationDetail" element={<DonationDetail />} />
+        <Route path="/chat" element={<ChatBot />} />
       </Routes>
     </Router>
   );
