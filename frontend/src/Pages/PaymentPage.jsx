@@ -25,7 +25,7 @@ const PaymentPage = () => {
   const handleVerifyOtp = (otp) => {
     if (otp === generatedOtp) {
       alert(
-        `Payment of Rs. ${amount} to ${companyName} Successful! Waiting for BOQ verification.`
+        `Payment of Rs. ${amount} to ${companyName} Successful! Waiting for BOQ verification.`,
       );
       navigate("/profile");
     } else {

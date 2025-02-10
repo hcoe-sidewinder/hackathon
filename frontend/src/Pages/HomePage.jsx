@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TradeCard from "../components/TradeCard";
+import TradeCard from "../components/tradeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
-import {
-  Box,
-  Button,
-  Typography,
-  Avatar,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import ChatBot from "./ChatBot";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 
@@ -80,7 +73,7 @@ export const sampleUsers = [
 const defaultProfilePicture = "https://via.placeholder.com/150";
 
 const HomePage = () => {
-  const { state, dispatch } = useTrade();
+  const { dispatch } = useTrade();
   useEffect(() => {
     const getAllTasks = async () => {
       const response = await axios.get(
@@ -90,7 +83,7 @@ const HomePage = () => {
           Headers: {
             Cookie: { access_token: localStorage.getItem("token") },
           },
-        }
+        },
       );
       if (response.data.success) {
         console.log(response.data.data);
@@ -103,7 +96,7 @@ const HomePage = () => {
     const getdoneeTasks = async () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}trade/asked`,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.data.success) {
         console.log(response.data.data);
@@ -118,7 +111,7 @@ const HomePage = () => {
         `${import.meta.env.VITE_API_URL}trade/donated`,
         {
           withCredentials: true,
-        }
+        },
       );
       if (response.data.success) {
         console.log(response.data.data);
@@ -134,7 +127,7 @@ const HomePage = () => {
 
   // dubai donorId and doneeId vayeko cards filter garna
   const filteredCards = sampleUsers.filter(
-    (card) => !(card.donorId && card.doneeId)
+    (card) => !(card.donorId && card.doneeId),
   );
 
   const handleGoToDonateePage = () => {};
@@ -192,6 +185,8 @@ const HomePage = () => {
       <HowItWorks />
 
       <Footer />
+
+      <ChatBot />
     </Box>
   );
 };

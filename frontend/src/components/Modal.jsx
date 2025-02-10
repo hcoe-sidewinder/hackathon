@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React from "react";
 
 const Modal = ({ onClose, title, children }) => {
   return (
@@ -20,3 +18,4 @@ const Modal = ({ onClose, title, children }) => {
 };
 
 export default Modal;
+

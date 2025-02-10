@@ -9,7 +9,7 @@ import { useTrade } from "../context/tradeContext";
 import { toast } from "sonner";
 
 const DonationDetail = ({ donation, onBack }) => {
-  const { state, dispatch } = useTrade();
+  const { dispatch } = useTrade();
   const location = useLocation();
   const current = location.pathname;
   console.log(current);
@@ -56,16 +56,16 @@ const DonationDetail = ({ donation, onBack }) => {
   const handleVerifyOtp = async () => {
     if (otp === generatedOtp) {
       alert(
-        `Payment of Rs. ${donation.paymentPhases[0]} to ${donation.companyName} Successful! Waiting for BOQ verification.`
+        `Payment of Rs. ${donation.paymentPhases[0]} to ${donation.companyName} Successful! Waiting for BOQ verification.`,
       );
       setShowOtpModal(false);
       try {
         const response = await axios.put(
-          `${import.meta.env.VITE_API_URL}trade/${trade._id}/pledge`,
+          `${import.meta.env.VITE_API_URL}trade/${tradeId._id}/pledge`,
           {},
           {
             withCredentials: true,
-          }
+          },
         );
         if (response.data.success) {
           console.log(response.data.data);

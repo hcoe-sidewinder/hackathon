@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import axios from "axios";
+import chatBotIcon from "../../public/images/chatbot.png";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +9,7 @@ const ChatBot = () => {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatBoxRef = useRef(null);
 
   const toggleChatbot = () => {
     setIsOpen(!isOpen);
@@ -21,30 +24,49 @@ const ChatBot = () => {
     setInput("");
     setLoading(true);
 
-    const response = await axios.post("http://localhost:5000/query", {
-      question: userMessage.text,
-    });
+    try {
+      const response = await axios.post("http://localhost:5000/query", {
+        question: userMessage.text,
+      });
 
-    const botResponse = { text: response.data.answer, sender: "bot" };
-    setMessages((prev) => [...prev, botResponse]);
+      const botResponse = { text: response.data.answer, sender: "bot" };
+      setMessages((prev) => [...prev, botResponse]);
+    } catch (error) {
+      console.error("Error fetching bot response:", error);
+      setMessages((prev) => [
+        ...prev,
+        { text: "Sorry, something went wrong!", sender: "bot" },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-start">
-      {/* Chatbot Toggle Button */}
+    <div
+      className="fixed bottom-5 right-5 flex flex-col items-end"
+      style={{ zIndex: 9999 }}
+    >
+      {/* Floating Chat Button */}
       <button
         onClick={toggleChatbot}
-        className="bg-blue-600 text-white px-4 py-2 rounded-full shadow-md"
+        className="text-black text-5xl w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-lg transition-transform transform hover:scale-110"
       >
-        {isOpen ? "Close Chat" : "Chat"}
+        <img src={chatBotIcon} />
       </button>
 
       {/* Chatbot Window */}
       {isOpen && (
-        <div className="bg-white w-96 h-[28rem] mt-2 rounded-lg shadow-lg flex flex-col border border-gray-300">
+        <div
+          ref={chatBoxRef}
+          className="bg-white w-[500px] h-[600px] mt-3 rounded-lg shadow-lg flex flex-col resize overflow-hidden"
+        >
           {/* Chat Header */}
-          <div className="bg-blue-600 text-white p-3 text-center rounded-t-lg">
-            Chatbot
+          <div className="bg-cyan-600 text-white p-3 text-center rounded-t-lg flex justify-between items-center">
+            <span>Chatbot</span>
+            <button onClick={toggleChatbot} className="text-white text-xl">
+              ✖
+            </button>
           </div>
 
           {/* Chat Messages */}
@@ -83,7 +105,7 @@ const ChatBot = () => {
             />
             <button
               onClick={sendMessage}
-              className="bg-blue-600 text-white px-4 rounded-r-lg"
+              className="bg-cyan-600 text-white px-4 rounded-r-lg"
             >
               Send
             </button>

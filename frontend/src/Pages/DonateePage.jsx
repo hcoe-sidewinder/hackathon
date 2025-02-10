@@ -19,7 +19,7 @@ import { useTrade } from "../context/tradeContext";
 const DonateePage = () => {
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
-  const { state, dispatch } = useTrade();
+  const { dispatch } = useTrade();
   const navigate = useNavigate();
 
   const [donateeData, setDonateeData] = useState(null);
@@ -57,7 +57,7 @@ const DonateePage = () => {
   const handlePublish = async () => {
     const totalAmount = amountsPerPhase.reduce(
       (acc, amount) => acc + parseInt(amount || 0),
-      0
+      0,
     );
     if (totalAmount > seekingAmount) {
       alert("The total amount per phase cannot exceed the seeking amount.");
@@ -85,7 +85,7 @@ const DonateePage = () => {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
       if (response.data.success) {
         console.log("response aako", response.data.data);
