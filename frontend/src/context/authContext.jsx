@@ -4,16 +4,18 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
-  <AuthContext.Provider value={{ auth, setAuth }}>
-    {children}
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ auth, setAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
-  const auth = useContext(AuthContext);
-  if (!auth) {
+  const authContent = useContext(AuthContext);
+  if (!authContent) {
     console.log("Auth not found");
     return;
   }
-  return auth;
+  return authContent;
 };

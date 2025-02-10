@@ -64,7 +64,7 @@ const login = async (req, res) => {
       .json({
         message: "Login successful",
         success: true,
-        passUser,
+        data: passUser,
         accessToken: accessToken,
       });
   } catch (error) {

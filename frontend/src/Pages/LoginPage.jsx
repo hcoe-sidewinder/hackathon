@@ -4,8 +4,10 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CreditCard, Lock } from "lucide-react";
+import { useAuth } from "../context/authContext.jsx";
 
 const LoginPage = () => {
+  const authContent = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState({
     panNumber: "",
@@ -38,6 +40,8 @@ const LoginPage = () => {
 
       if (response.data.success) {
         localStorage.setItem("auth_token", response.data.accessToken);
+        console.log(response.data.data);
+        authContent.setAuth(response.data.data);
         toast.success("Login successful!");
         navigate("/home");
       }

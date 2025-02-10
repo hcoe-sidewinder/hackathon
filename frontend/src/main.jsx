@@ -15,7 +15,9 @@ createRoot(document.getElementById("root")).render(
         <Toaster />
       </TradeProvider>
     </AuthProvider> */}
-    <App />
-    <Toaster />
+    <AuthProvider>
+        <App />
+        <Toaster />
+    </AuthProvider>
   </StrictMode>
 );

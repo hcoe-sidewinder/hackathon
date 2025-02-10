@@ -8,9 +8,11 @@ export const TradeProvider = ({ children }) => {
     doneeTrades: [],
     donorTrades: [],
   });
-  <TradeContext.Provider value={{ state, dispatch }}>
-    {children}
-  </TradeContext.Provider>;
+  return (
+    <TradeContext.Provider value={{ state, dispatch }}>
+      {children}
+    </TradeContext.Provider>
+  );
 };
 
 export const useTrade = () => {
