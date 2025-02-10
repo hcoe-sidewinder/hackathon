@@ -88,7 +88,7 @@ const DonateePage = () => {
         }
       );
       if (response.data.success) {
-        console.log("response aako", response.data.data[0]);
+        console.log("response aako", response.data.data);
         dispatch({ type: "addTrades", payload: response.data.data });
         // navigate("/home");
         setTimeout(() => {
