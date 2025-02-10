@@ -18,15 +18,9 @@ const LoginPage = () => {
 
   const loginHandler = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
+
     if (!user.panNumber || !user.password) {
       toast.error("Please enter both PAN number and password.");
-=======
-
-    // Check if both email and password are provided
-    if (!user.email || !user.password) {
-      toast.error("Please enter both email and password.");
->>>>>>> stuti
       return;
     }
 
