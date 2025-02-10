@@ -7,7 +7,6 @@ import PaymentPage from "./Pages/PaymentPage";
 import SignupPage from "./Pages/SignupPage";
 import HomePage from "./Pages/HomePage";
 import DonateePage from "./Pages/DonateePage";
-import DonationDetail from "./Pages/DonationDetail";
 
 const App = () => {
   return (

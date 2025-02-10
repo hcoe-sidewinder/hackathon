@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -12,14 +12,11 @@ import {
   CardContent,
   InputAdornment,
 } from "@mui/material";
-import { sampleUser } from "../assets/sampleDetails"; // Import the sample data
 import axios from "axios";
 import { toast } from "sonner";
 import { useTrade } from "../context/tradeContext";
 
-const defaultProfilePicture = "https://via.placeholder.com/150"; // Default placeholder for profile picture
-
-const DonateePage = ({ onPublish }) => {
+const DonateePage = () => {
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
   const { state, dispatch } = useTrade();
@@ -96,7 +93,7 @@ const DonateePage = ({ onPublish }) => {
         navigate("/home");
       }
     } catch (error) {
-      console.log("donatepage:", error);
+      console.log("donate page:", error);
       toast.error(error.response.data.message);
     }
   };
