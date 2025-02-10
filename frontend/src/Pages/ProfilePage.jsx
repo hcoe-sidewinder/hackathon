@@ -15,7 +15,6 @@ const ProfilePage = ({ user }) => {
         cursor-pointer relative overflow-hidden`}
       onClick={() => setActiveSection(activeSection === title ? null : title)}
     >
-      
       <div
         className={`absolute inset-0 bg-bgColor/5 transition-opacity duration-500
         ${activeSection === title ? "opacity-100" : "opacity-0"}`}
@@ -52,7 +51,6 @@ const ProfilePage = ({ user }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-bgColor to-transitionColor p-6">
       <div className="bg-cardColor backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-4xl p-8 transition-all duration-300 hover:shadow-2xl">
-      
         {/* for profile picture */}
         <div className="flex items-center gap-6 border-b pb-6 group">
           <div className="relative">
@@ -71,7 +69,7 @@ const ProfilePage = ({ user }) => {
           </div>
         </div>
 
-       {/* for other details */}
+        {/* for other details */}
         <Section title="Contact Details" icon={<Phone className="w-6 h-6" />}>
           <div className="space-y-2 pt-4">
             <p className="text-gray-700">
