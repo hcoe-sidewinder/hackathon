@@ -57,7 +57,7 @@ const DonateePage = () => {
   const handlePublish = async () => {
     const totalAmount = amountsPerPhase.reduce(
       (acc, amount) => acc + parseInt(amount || 0),
-      0,
+      0
     );
     if (totalAmount > seekingAmount) {
       alert("The total amount per phase cannot exceed the seeking amount.");
@@ -85,12 +85,15 @@ const DonateePage = () => {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        },
+        }
       );
       if (response.data.success) {
-        console.log("response aako", response.data.data);
+        console.log("response aako", response.data.data[0]);
         dispatch({ type: "addTrades", payload: response.data.data });
-        navigate("/home");
+        // navigate("/home");
+        setTimeout(() => {
+          navigate("/home");
+        }, 3000);
       }
     } catch (error) {
       console.log("donate page:", error);

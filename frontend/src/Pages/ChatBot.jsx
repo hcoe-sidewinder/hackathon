@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
-import chatBotIcon from "../../public/images/chatbot.png";
+import chatBotIcon from "../assets/chatbot.png";
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);

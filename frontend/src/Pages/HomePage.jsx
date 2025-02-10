@@ -10,138 +10,19 @@ import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 
-// Sample Data Array - yo chai pachi hatauda huncha...backend bata data fetch garera lyaune
-export const sampleUsers = [
-  {
-    index: 1,
-    doneeId: "12345",
-    donorId: "67890",
-    phaseId: "3",
-    nob: "Khatri Ceramics",
-    totalAmount: "500000",
-    desc: "I need the aforementioned amount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
-    panNo: "775976",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 2,
-    doneeId: "54321",
-    donorId: null, // No donorId
-    phaseId: "5",
-    nob: "Green Grocers",
-    totalAmount: "300000",
-    desc: "We need funds to purchase organic seeds and fertilizers to expand our farm.",
-    panNo: "123456",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 3,
-    doneeId: "09876",
-    donorId: null, // No donerId
-    phaseId: "7",
-    nob: "Eco Builders",
-    totalAmount: "700000",
-    desc: "Funds are needed to construct eco-friendly housing for low-income families.",
-    panNo: "987654",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 4,
-    doneeId: "11223",
-    donorId: "44556",
-    phaseId: "9",
-    nob: "Solar Solutions",
-    totalAmount: "900000",
-    desc: "We aim to install solar panels in rural areas to provide clean energy.",
-    panNo: "334455",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 5,
-    doneeId: "11623",
-    donorId: "44656",
-    phaseId: "8",
-    nob: "Wind Surfers",
-    totalAmount: "50000",
-    desc: "We aim to harness wind energy rural areas.",
-    panNo: "334455",
-    profilePic: "https://via.placeholder.com/150",
-  },
-];
-
-// yo chai profile picture ko default value
-const defaultProfilePicture = "https://via.placeholder.com/150";
-
 const HomePage = () => {
-  const { dispatch } = useTrade();
-  useEffect(() => {
-    console.log("Updated allTrades:", state.allTrades);
-  }, [state.allTrades]);
-
-  useEffect(() => {
-    const getAllTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade`,
-        { withCredentials: true },
-        {}
-      );
-      if (response.data.success) {
-        console.log("Fetched trades data:", response.data.data);
-        dispatch({ type: "set_allTrades", payload: response.data.data });
-      }
-    };
-    getAllTasks();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const getdoneeTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade/asked`,
-        { withCredentials: true }
-      );
-      if (response.data.success) {
-        //console.log(response.data.data);
-        dispatch({ type: "set_doneeTrades", payload: response.data.data });
-      }
-    };
-    getdoneeTasks();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const getdonorTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade/donated`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data.success) {
-        //console.log(response.data.data);
-        dispatch({ type: "set_donorTrades", payload: response.data.data });
-      }
-    };
-    getdonorTasks();
-  }, [dispatch]);
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
-  // console.log(auth);
-  const navigate = useNavigate();
-
-  console.log(`State alltrades: ${state.allTrades[0]}`);
-
-  // dubai donorId and doneeId vayeko cards filter garna
-  const filteredCards = sampleUsers.filter(
-    (card) => !(card.donorId && card.doneeId)
-  );
-
-  console.log(`Filtered Cards: ${filteredCards}`);
+  const { state, dispatch } = useTrade();
+  // Change this line to use state.allTrades instead of sampleUsers
+  const filteredCards = state.allTrades
+    ? state.allTrades.filter((card) => !(card.donorId && card.doneeId))
+    : [];
 
   return (
     <Box>
       <Header />
       <Hero />
-
-      {/* Main Content */}
       <Box
         sx={{
           padding: 4,
@@ -156,8 +37,6 @@ const HomePage = () => {
         <Typography variant="h4" sx={{ color: "white", mb: 4, ml: 2 }}>
           Featured Donations
         </Typography>
-
-        {/* Grid of TradeCards */}
         <Box
           sx={{
             display: "grid",
@@ -167,31 +46,29 @@ const HomePage = () => {
             padding: 2,
           }}
         >
-          {filteredCards.map((trade, index) => (
-            <TradeCard
-              key={index}
-              index={trade.index}
-              nob={trade.nob}
-              phaseid={trade.phaseId.phase}
-              total={trade.totalAmount}
-              desc={trade.desc}
-              panno={trade.doneeId.panNo}
-              profilePic={trade.doneeId.profilePic}
-              donorId={trade.donorId._id}
-              doneeId={trade.doneeId._id}
-              userId="67890" // esma chai user id rakhda bhayo
-            />
-          ))}
+          {filteredCards.map((trade, index) => {
+            return (
+              <TradeCard
+                key={index}
+                tradeId={trade._id}
+                index={trade.index}
+                nob={trade.nob}
+                phaseid={trade.phaseId?.length}
+                total={trade.totalAmount}
+                desc={trade.desc}
+                panno={trade.doneeId?.panNo}
+                profilePic={trade.doneeId?.profilePic}
+                donorId={trade.donorId?._id}
+                doneeId={trade.doneeId?._id}
+              />
+            );
+          })}
         </Box>
       </Box>
-
       <HowItWorks />
-
       <Footer />
-
       <ChatBot />
     </Box>
   );
 };
-
 export default HomePage;

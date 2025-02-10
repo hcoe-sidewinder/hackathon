@@ -8,8 +8,66 @@ import SignupPage from "./Pages/SignupPage";
 import HomePage from "./Pages/HomePage";
 import DonateePage from "./Pages/DonateePage";
 import ChatBot from "./Pages/ChatBot";
+import { useEffect } from "react";
+import axios from "axios";
+import { useTrade } from "./context/tradeContext";
 
 const App = () => {
+  const { state, dispatch } = useTrade();
+  useEffect(() => {
+    const getAllTrade = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}trade`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          dispatch({ type: "set_allTrades", payload: response.data.data });
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    getAllTrade();
+  }, []);
+  useEffect(() => {
+    const getdoneeTrade = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}trade/asked`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          dispatch({ type: "set_doneeTrades", payload: response.data.data });
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    getdoneeTrade();
+  }, []);
+  useEffect(() => {
+    const getdonorTrades = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}trade/donated`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          dispatch({ type: "set_donorTrades", payload: response.data.data });
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    getdonorTrades();
+  }, []);
   return (
     <Router>
       <Routes>

@@ -7,16 +7,11 @@ import { TradeProvider } from "./context/tradeContext.jsx";
 import { AuthProvider } from "./context/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <AuthProvider>
-      <TradeProvider>
-        <App />
-        <Toaster />
-      </TradeProvider>
-    </AuthProvider>
-    {/* <AuthProvider>
-        <App />
-        <Toaster />
-    </AuthProvider> */}
-  </StrictMode>,
+  <AuthProvider>
+    <TradeProvider>
+      <App />
+      <Toaster />
+    </TradeProvider>
+  </AuthProvider>,
+
 );
