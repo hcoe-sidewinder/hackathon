@@ -1,7 +1,11 @@
 import { Avatar } from "@mui/material";
+import { lightGreen } from "@mui/material/colors";
 import { Leaf, Megaphone, LogOut, Box } from "lucide-react";
 
 const Header = () => {
+  const test = localStorage.getItem("auth");
+  const auth = JSON.parse(test);
+  console.log(auth.profilePic);
   return (
     <header className="bg-gradient-to-br from-[#134e5ee6] to-[#71C9CE] text-white shadow-md">
       <div className="container mx-auto px-6 py-6 flex flex-col lg:flex-row items-center justify-between">
@@ -55,22 +59,12 @@ const Header = () => {
             <LogOut className="h-5 w-5 mr-2" />
             Log Out
           </a>
-          <a>
-            <Box
-              sx={{
-                display: "flex",
-                align: "center",
-                mb: 3,
-                height: 100,
-                width: 100,
-                borderRadius: 1,
-              }}
-            >
-              <img
-                src="../access/pfp.jpg"
-                sx={{ width: 100, height: 100, mr: 0, padding: 1 }}
-              />
-            </Box>
+          <a href="/profile">
+            <img
+              className="h-10 w-10 rounded-full"
+              src={auth.profilePic}
+              sx={{ width: 100, height: 100, mr: 0, padding: 1 }}
+            />
           </a>
         </div>
       </div>

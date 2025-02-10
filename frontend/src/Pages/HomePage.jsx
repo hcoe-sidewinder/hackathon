@@ -11,68 +11,6 @@ import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 import TaxCalculator from "../components/TaxCalculator";
 
-// Sample Data Array - yo chai pachi hatauda huncha...backend bata data fetch garera lyaune
-export const sampleUsers = [
-  {
-    index: 1,
-    doneeId: "12345",
-    donorId: null,
-    phaseId: "3",
-    nob: "Khatri Ceramics",
-    totalAmount: "500000",
-    desc: "I need theamount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
-    panNo: "775976",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 2,
-    doneeId: "54321",
-    donorId: null, // No donorId
-    phaseId: "5",
-    nob: "Green Grocers",
-    totalAmount: "300000",
-    desc: "We need funds to purchase organic seeds and fertilizers to expand our farm.",
-    panNo: "123456",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 3,
-    doneeId: "09876",
-    donorId: null, // No donerId
-    phaseId: "7",
-    nob: "Eco Builders",
-    totalAmount: "700000",
-    desc: "Funds are needed to construct eco-friendly housing for low-income families.",
-    panNo: "987654",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 4,
-    doneeId: "11223",
-    donorId: null,
-    phaseId: "9",
-    nob: "Solar Solutions",
-    totalAmount: "900000",
-    desc: "We aim to install solar panels in rural areas to provide clean energy.",
-    panNo: "334455",
-    profilePic: "https://via.placeholder.com/150",
-  },
-  {
-    index: 5,
-    doneeId: "11623",
-    donorId: null,
-    phaseId: "8",
-    nob: "Wind Surfers",
-    totalAmount: "50000",
-    desc: "We aim to harness wind energy rural areas.",
-    panNo: "334455",
-    profilePic: "https://via.placeholder.com/150",
-  },
-];
-
-// yo chai profile picture ko default value
-const defaultProfilePicture = "https://via.placeholder.com/150";
-
 const HomePage = () => {
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
