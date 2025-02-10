@@ -52,6 +52,7 @@ const LoginPage = () => {
 
         console.log(response.data.data);
         setAuth(response.data.data);
+        localStorage.setItem("token", response.data.accessToken)
         toast.success("Login successful!");
         navigate("/home");
       }

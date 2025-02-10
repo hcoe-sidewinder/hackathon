@@ -9,15 +9,15 @@ import { AuthProvider } from "./context/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    {/* <AuthProvider>
+    <AuthProvider>
       <TradeProvider>
         <App />
         <Toaster />
       </TradeProvider>
-    </AuthProvider> */}
-    <AuthProvider>
+    </AuthProvider>
+    {/* <AuthProvider>
         <App />
         <Toaster />
-    </AuthProvider>
+    </AuthProvider> */}
   </StrictMode>
 );

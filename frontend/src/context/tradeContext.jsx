@@ -1,13 +1,20 @@
 import { createContext, useContext, useReducer } from "react";
+import tradeReducer from "../Reducers/tradeReducers";
 
-const TradeContext = createContext(null);
+const initialState = {
+  allTrades: [],
+  doneeTrades: [],
+  donorTrades: [],
+};
+
+const TradeContext = createContext({
+  state: initialState,
+  dispatch: () => {},
+});
 
 export const TradeProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(tradeReducer, {
-    allTrades: [],
-    doneeTrades: [],
-    donorTrades: [],
-  });
+  const [state, dispatch] = useReducer(tradeReducer, initialState);
+
   return (
     <TradeContext.Provider value={{ state, dispatch }}>
       {children}
@@ -16,10 +23,9 @@ export const TradeProvider = ({ children }) => {
 };
 
 export const useTrade = () => {
-  const trades = useContext(TradeContext);
-  if (!trades) {
-    console.log("no any trades");
-    return;
+  const context = useContext(TradeContext);
+  if (!context) {
+    throw new Error("useTrade must be used inside a TradeProvider.");
   }
-  return trades;
+  return context;
 };
