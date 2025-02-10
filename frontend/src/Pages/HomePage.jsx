@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import TradeCard from "./components/TradeCard"; // Adjust the path as needed
+import TradeCard from "../components/tradeCard"; // Adjust the path as needed
 import {
   Box,
   Button,

@@ -1,4 +1,4 @@
-export const sampleUser = {
+export const sampleTrade = {
   doneeId: "12345",
   donorId: "67890",
   phaseId: "3",

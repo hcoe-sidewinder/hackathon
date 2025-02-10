@@ -19,7 +19,7 @@ const App = () => {
           element={<ProfilePage user={sampleUser} />}
         ></Route>
 
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/donatee" element={<DonateePage />} />
       </Routes>
