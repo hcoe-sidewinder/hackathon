@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CreditCard, Lock } from "lucide-react";
 import { useAuth } from "../context/authContext.jsx";
-import Footer from "../components/Footer";
 
 const LoginPage = () => {
   const { auth, setAuth } = useAuth();
@@ -37,7 +36,7 @@ const LoginPage = () => {
             "Content-type": "application/json",
           },
           withCredentials: true,
-        }
+        },
       );
 
       if (response.data.success) {
@@ -47,12 +46,12 @@ const LoginPage = () => {
         console.log(`String: ${string}, type: ${typeof string}`);
         localStorage.setItem(
           "auth",
-          String(JSON.stringify(response.data.data))
+          String(JSON.stringify(response.data.data)),
         );
 
         console.log(response.data.data);
         setAuth(response.data.data);
-        localStorage.setItem("token", response.data.accessToken)
+        localStorage.setItem("token", response.data.accessToken);
         toast.success("Login successful!");
         navigate("/home");
       }

@@ -19,7 +19,7 @@ import { useTrade } from "../context/tradeContext";
 const DonateePage = () => {
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
-  const { state, dispatch } = useTrade();
+  const { dispatch } = useTrade();
   const navigate = useNavigate();
 
   const [donateeData, setDonateeData] = useState(null);
@@ -90,7 +90,10 @@ const DonateePage = () => {
       if (response.data.success) {
         console.log("response aako", response.data.data);
         dispatch({ type: "addTrades", payload: response.data.data });
-        navigate("/home");
+        // navigate("/home");
+        setTimeout(() => {
+          navigate("/home");
+        }, 3000);
       }
     } catch (error) {
       console.log("donate page:", error);
@@ -225,7 +228,7 @@ const DonateePage = () => {
                       onChange={(e) => setSeekingAmount(e.target.value)}
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">₹</InputAdornment>
+                          <InputAdornment position="start">Rs.</InputAdornment>
                         ),
                       }}
                       sx={{
@@ -299,7 +302,7 @@ const DonateePage = () => {
                         }
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">₹</InputAdornment>
+                            <InputAdornment position="start">Rs</InputAdornment>
                           ),
                         }}
                         sx={{

@@ -118,7 +118,7 @@ const SignupPage = () => {
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
-        }
+        },
       );
       if (response.data.success) {
         toast.success(response.data.message);

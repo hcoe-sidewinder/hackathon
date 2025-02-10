@@ -1,0 +1,7 @@
+POST http://localhost:5000/query
+accept-type: application/json
+content-type: application/json
+
+{
+  "question": "Are you chatgpt?"
+}

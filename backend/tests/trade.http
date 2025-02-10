@@ -27,12 +27,12 @@ content-type: application/json
 POST http://localhost:8080/api/trade/add
 accept: application/json
 content-type: application/json
-cookie: access_token={{login1.response.body.$.accessToken}}
+cookie: access_token={{login2.response.body.$.accessToken}}
 
 {
-  "nob": "Sidewinder Inv",
-  "totalAmount": 20000,
-  "desc": "Tealsjdasdasdaksdjhasklfhjaljsdh akjhd akljhfkjhs",
+  "nob": "aslkdjaslakdjasldkjlsdj Inv",
+  "totalAmount": 200000,
+  "desc": "Tealsjdaasldksdjalskdjjakjhd akljhfkjhs",
   "panNo": "1234564789",
   "phases": [
     {
@@ -41,15 +41,11 @@ cookie: access_token={{login1.response.body.$.accessToken}}
     },
     {
       "phase": 2,
-      "amount": 200
+      "amount": 210
     },
     {
       "phase": 3,
-      "amount": 300 
-    },
-    {
-      "phase": 4,
-      "amount": 400
+      "amount": 311 
     }
   ]
 }
@@ -62,7 +58,7 @@ content-type: application/json
 
 ###
 
-GET http://localhost:8080/api/trade/67a90364bc059f96106cd2c0
+GET http://localhost:8080/api/trade/67a9acefe9ce9245de3c2798
 accept: application/json
 content-type: application/json
 

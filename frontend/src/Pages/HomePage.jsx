@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TradeCard from "../components/TradeCard";
+import TradeCard from "../components/tradeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
-import {
-  Box,
-  Button,
-  Typography,
-  Avatar,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import ChatBot from "./ChatBot";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 import TaxCalculator from "../components/TaxCalculator";
@@ -81,72 +74,18 @@ export const sampleUsers = [
 const defaultProfilePicture = "https://via.placeholder.com/150";
 
 const HomePage = () => {
-  const { state, dispatch } = useTrade();
-  useEffect(() => {
-    const getAllTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade`,
-        {},
-        {
-          Headers: {
-            Cookie: { access_token: localStorage.getItem("token") },
-          },
-        }
-      );
-      if (response.data.success) {
-        console.log(response.data.data);
-        dispatch({ type: "set_allTrades", payload: response.data.data });
-      }
-    };
-    getAllTasks();
-  }, []);
-  useEffect(() => {
-    const getdoneeTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade/asked`,
-        { withCredentials: true }
-      );
-      if (response.data.success) {
-        console.log(response.data.data);
-        dispatch({ type: "set_doneeTrades", payload: response.data.data });
-      }
-    };
-    getdoneeTasks();
-  }, []);
-  useEffect(() => {
-    const getdonorTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade/donated`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data.success) {
-        console.log(response.data.data);
-        dispatch({ type: "set_donorTrades", payload: response.data.data });
-      }
-    };
-    getdonorTasks();
-  }, []);
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
-  // console.log(auth);
-  const navigate = useNavigate();
+  const { state, dispatch } = useTrade();
+  // Change this line to use state.allTrades instead of sampleUsers
+  const filteredCards = state.allTrades
+    ? state.allTrades.filter((card) => !(card.donorId && card.doneeId))
+    : [];
 
-  // dubai donorId and doneeId vayeko cards filter garna
-  const filteredCards = sampleUsers.filter(
-    (card) => !(card.donorId && card.doneeId)
-  );
-
-  const handleGoToDonateePage = () => {};
-  const handleLogout = () => {};
-  const handleGoToProfile = () => {};
   return (
     <Box>
       <Header />
       <Hero />
-
-      {/* Main Content */}
       <Box
         sx={{
           padding: 4,
@@ -161,8 +100,6 @@ const HomePage = () => {
         <Typography variant="h4" sx={{ color: "white", mb: 4, ml: 2 }}>
           Featured Donations
         </Typography>
-
-        {/* Grid of TradeCards */}
         <Box
           sx={{
             display: "grid",
@@ -172,29 +109,29 @@ const HomePage = () => {
             padding: 2,
           }}
         >
-          {filteredCards.map((user, index) => (
-            <TradeCard
-              key={index}
-              index={user.index}
-              nob={user.nob}
-              phaseid={user.phaseId}
-              total={user.totalAmount}
-              desc={user.desc}
-              panno={user.panNo}
-              profilePic={user.profilePic || defaultProfilePicture}
-              donorId={user.donorId}
-              doneeId={user.doneeId}
-              userId="67890" // esma chai user id rakhda bhayo
-            />
-          ))}
+          {filteredCards.map((trade, index) => {
+            return (
+              <TradeCard
+                key={index}
+                tradeId={trade._id}
+                index={trade.index}
+                nob={trade.nob}
+                phaseid={trade.phaseId?.length}
+                total={trade.totalAmount}
+                desc={trade.desc}
+                panno={trade.doneeId?.panNo}
+                profilePic={trade.doneeId?.profilePic}
+                donorId={trade.donorId?._id}
+                doneeId={trade.doneeId?._id}
+              />
+            );
+          })}
         </Box>
       </Box>
-
       <HowItWorks />
-
       <Footer />
+      <ChatBot />
     </Box>
   );
 };
-
 export default HomePage;

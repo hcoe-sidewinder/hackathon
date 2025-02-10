@@ -10,6 +10,7 @@ import {
 
 function TradeCard({
   index,
+  tradeId,
   nob,
   phaseid,
   total,
@@ -23,7 +24,8 @@ function TradeCard({
 
   // Handle card click to navigate to DonationDetail
   const handleClick = () => {
-    navigate(`/donation-detail/${index}`);
+    console.log(tradeId)
+    navigate(`/donation-detail/${tradeId}`);
   };
 
   return (

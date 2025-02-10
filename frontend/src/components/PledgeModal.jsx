@@ -22,7 +22,7 @@ const PledgeModal = ({ donation, onClose, onProceedToPayment }) => {
           Confirm Your Pledge
         </h2>
         <p className="text-gray-600 mt-2">
-          You are pledging to donate for <strong>{donation.companyName}</strong>
+          You are pledging to donate for <strong>{donation.nob}</strong>
           .
         </p>
 
@@ -31,7 +31,7 @@ const PledgeModal = ({ donation, onClose, onProceedToPayment }) => {
             Phase 1 Payment
           </h3>
           <p className="text-gray-700">
-            <strong>Amount:</strong> Rs. {donation.paymentPhases[0]}
+            <strong>Amount:</strong> Rs. {donation.phaseId[0].amount}
           </p>
         </div>
 
@@ -70,4 +70,5 @@ const PledgeModal = ({ donation, onClose, onProceedToPayment }) => {
   );
 };
 
-export default PledgeModal
+export default PledgeModal;
+
