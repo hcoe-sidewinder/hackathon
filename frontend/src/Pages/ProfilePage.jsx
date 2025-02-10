@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Edit, Phone, Building2, CreditCard, Building } from "lucide-react";
 import { useAuth } from "../context/authContext";
+import Footer from "../components/Footer";
 
 const ProfilePage = ({ user }) => {
   const auth2 = JSON.parse(localStorage.getItem("auth"));
@@ -12,7 +13,7 @@ const ProfilePage = ({ user }) => {
   // console.log(auth.name);
   // // console.log(auth);
   // console.log(auth2);
-  console.log(auth)
+  console.log(auth);
   const [activeSection, setActiveSection] = useState("Contact Details");
 
   const Section = ({ title, icon, children }) => (
@@ -140,6 +141,7 @@ const ProfilePage = ({ user }) => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CreditCard, Lock } from "lucide-react";
 import { useAuth } from "../context/authContext.jsx";
+import Footer from "../components/Footer";
 
 const LoginPage = () => {
   const { auth, setAuth } = useAuth();
