@@ -170,6 +170,7 @@ import {
   History,
 } from "lucide-react";
 import { Link } from "react-router";
+import HistorySection from "../components/HistorySection";
 
 const ProfilePage = ({ user }) => {
   const auth = JSON.parse(localStorage.getItem("auth"));
@@ -296,10 +297,10 @@ const ProfilePage = ({ user }) => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent dropdown from closing
+                  e.stopPropagation();
                   setHistoryView("Donor");
                 }}
-                className={`px-4 py-2  rounded-md transition-all duration-300 ${
+                className={`px-4 py-2 rounded-md transition-all duration-300 ${
                   historyView === "Donor"
                     ? "bg-bgColor text-white"
                     : "bg-gray-300"
@@ -309,10 +310,10 @@ const ProfilePage = ({ user }) => {
               </button>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent dropdown from closing
+                  e.stopPropagation();
                   setHistoryView("Donee");
                 }}
-                className={`px-4 py-2 rounded-md bg-bgColor transition-all duration-300 ${
+                className={`px-4 py-2 rounded-md transition-all duration-300 ${
                   historyView === "Donee"
                     ? "bg-bgColor text-white"
                     : "bg-gray-300"
@@ -322,50 +323,11 @@ const ProfilePage = ({ user }) => {
               </button>
             </div>
 
-            {/* History Content Wrapper */}
-            <div className="relative h-40 overflow-hidden">
-              {/* Donor History */}
-              <div
-                className={`absolute top-0 left-0 w-full transition-transform duration-500 ${
-                  historyView === "Donor"
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-full opacity-0"
-                }`}
-              >
-                <ul>
-                  <li className="text-gray-700 flex justify-between">
-                    Sidewinder Technology<span>ongoing</span>
-                  </li>
-                  <li className="text-gray-700 flex justify-between">
-                    Kathmandu Limitedss <span>ongoing</span>
-                  </li>
-                  <li className="text-gray-700 flex justify-between">
-                    Lalitpur Limitedss <span>completed</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Donee History */}
-              <div
-                className={`absolute top-0 left-0 w-full transition-transform duration-500 ${
-                  historyView === "Donee"
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-full opacity-0"
-                }`}
-              >
-                <ul>
-                  <li className="text-gray-700 flex justify-between">
-                    Hearald Industry<span>ongoing</span>
-                  </li>
-                  <li className="text-gray-700 flex justify-between">
-                    Hair Dresser <span>ongoing</span>
-                  </li>
-                  <li className="text-gray-700 flex justify-between">
-                    Lalitpur Jackets <span>completed</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {/* Use the HistorySection component here */}
+            <HistorySection
+              historyView={historyView}
+              setHistoryView={setHistoryView}
+            />
           </div>
         </Section>
 

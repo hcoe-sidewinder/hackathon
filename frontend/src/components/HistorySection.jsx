@@ -4,6 +4,7 @@ const HistorySection = ({ historyView, setHistoryView }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [uploadedBOQs, setUploadedBOQs] = useState({});
+  const [selectedStage, setSelectedStage] = useState(null);
 
   const donorHistory = [
     { company: "Sidewinder Technology", stage: "ongoing" },
@@ -17,8 +18,9 @@ const HistorySection = ({ historyView, setHistoryView }) => {
     { company: "Lalitpur Jackets", stage: "completed" },
   ];
 
-  const openModal = (company) => {
+  const openModal = (company, stage) => {
     setSelectedCompany(company);
+    setSelectedStage(stage);
     setIsModalOpen(true);
   };
 
@@ -49,7 +51,7 @@ const HistorySection = ({ historyView, setHistoryView }) => {
               className={`flex justify-between p-3 rounded-md cursor-pointer ${
                 entry.stage === "completed" ? "bg-green-200" : "bg-yellow-200"
               }`}
-              onClick={() => openModal(entry.company)}
+              onClick={() => openModal(entry.company, entry.stage)}
             >
               <span className="font-semibold">{entry.company}</span>
               <span>{entry.stage}</span>
@@ -73,7 +75,7 @@ const HistorySection = ({ historyView, setHistoryView }) => {
               className={`flex justify-between p-3 rounded-md cursor-pointer ${
                 entry.stage === "completed" ? "bg-green-200" : "bg-yellow-200"
               }`}
-              onClick={() => openModal(entry.company)}
+              onClick={() => openModal(entry.company, entry.stage)}
             >
               <span className="font-semibold">{entry.company}</span>
               <span>{entry.stage}</span>
@@ -86,27 +88,35 @@ const HistorySection = ({ historyView, setHistoryView }) => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md w-96">
-            <h2 className="text-lg font-bold mb-4">
-              Upload BOQ - {selectedCompany}
-            </h2>
+            <h2 className="text-lg font-bold mb-4">BOQ - {selectedCompany}</h2>
             <div className="space-y-2">
               {[1, 2, 3].map((phase) => (
                 <div key={phase} className="flex items-center gap-3">
                   <span>Phase {phase}:</span>
-                  <input
-                    type="file"
-                    className="border p-1"
-                    disabled={
-                      phase !== 1 &&
-                      !uploadedBOQs[selectedCompany]?.includes(
-                        `Phase ${phase - 1}`
-                      )
-                    }
-                    onChange={handleBOQUpload}
-                  />
-                  {uploadedBOQs[selectedCompany]?.includes(
-                    `Phase ${phase}`
-                  ) && <span className="text-green-600">Uploaded</span>}
+                  {/* Donor can only view */}
+                  {historyView === "Donor" ? (
+                    uploadedBOQs[selectedCompany]?.includes(
+                      `Phase ${phase}`
+                    ) ? (
+                      <span className="text-green-600">Uploaded</span>
+                    ) : (
+                      <span className="text-gray-600">Not Available</span>
+                    )
+                  ) : (
+                    // Donee can upload unless completed
+                    <input
+                      type="file"
+                      className="border p-1"
+                      disabled={
+                        selectedStage === "completed" ||
+                        (phase !== 1 &&
+                          !uploadedBOQs[selectedCompany]?.includes(
+                            `Phase ${phase - 1}`
+                          ))
+                      }
+                      onChange={handleBOQUpload}
+                    />
+                  )}
                 </div>
               ))}
             </div>
