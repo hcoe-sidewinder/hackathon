@@ -1,9 +1,10 @@
 import { ArrowLeft, HandCoins, Calendar } from "lucide-react";
+
 import { useState } from "react";
 import PledgeModal from "../components/PledgeModal";
 
 const DonationDetail = ({ donation, onBack }) => {
-  const [showModal, setShowModal] = useState(false);
+
   const Section = ({ title, icon, children }) => (
     <div
       className="mt-6 p-4 rounded-md transition-all duration-300 ease-in-out
@@ -22,6 +23,8 @@ const DonationDetail = ({ donation, onBack }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-textColor to-transitionColor p-6">
       <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-3xl p-8 transition-all duration-300 hover:shadow-2xl">
+        {/* back to listings of donation requests */}
+
         <button
           onClick={onBack}
           className="group flex items-center text-textColor hover:text-hoverColor transition-all mb-6"
@@ -31,6 +34,7 @@ const DonationDetail = ({ donation, onBack }) => {
             Back to Listings
           </span>
         </button>
+
 
         <div className="flex items-center gap-6 border-b pb-6 group">
           <div className="relative">
@@ -67,7 +71,9 @@ const DonationDetail = ({ donation, onBack }) => {
           </div>
         </Section>
 
-        {/* phases section */}
+
+{/* phases section */}
+
         <Section title="Payment Phases" icon={<Calendar className="w-6 h-6" />}>
           <div>
             {donation.paymentPhases.length > 0 ? (
@@ -91,22 +97,30 @@ const DonationDetail = ({ donation, onBack }) => {
           </div>
         </Section>
 
+       
+
         <div className="flex justify-center mt-8">
           <button
-            onClick={() => setShowModal(true)}
+
             className="group flex items-center gap-2 bg-bgColor text-white px-8 py-4 rounded-md 
             transition-all duration-300 hover:bg-hoverColor hover:shadow-lg active:scale-95"
           >
             <HandCoins className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
             <span className="transition-transform duration-300 group-hover:translate-x-1">
+
               Pledge
+
+              Donate Now
+
             </span>
           </button>
         </div>
       </div>
+
       {showModal && (
         <PledgeModal donation={donation} onClose={() => setShowModal(false)} />
       )}
+
     </div>
   );
 };

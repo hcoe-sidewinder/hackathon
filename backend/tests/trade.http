@@ -1,0 +1,79 @@
+###
+# @name login1
+
+POST http://localhost:8080/api/user/login
+accept: application/json
+content-type: application/json
+
+{
+  "panNumber": "2108937138904723",
+  "password": "test"
+}
+
+###
+# @name login2
+
+POST http://localhost:8080/api/user/login
+accept: application/json
+content-type: application/json
+
+{
+  "panNumber": "1234564789",
+  "password": "test2"
+}
+
+###
+
+POST http://localhost:8080/api/trade/add
+accept: application/json
+content-type: application/json
+cookie: access_token={{login1.response.body.$.accessToken}}
+
+{
+  "nob": "Test",
+  "totalAmount": 1900,
+  "desc": "Tealsjdaksdjhasklfhjaljsdh akjhd akljhfkjhs",
+  "panNo": "2108937138904723",
+  "phases": [
+    {
+      "phase": 1,
+      "amount": 300
+    },
+    {
+      "phase": 2,
+      "amount": 200
+    },
+    {
+      "phase": 3,
+      "amount": 500 
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/trade
+accept: application/json
+content-type: application/json
+
+###
+
+GET http://localhost:8080/api/trade/67a90364bc059f96106cd2c0
+accept: application/json
+content-type: application/json
+
+###
+
+PUT http://localhost:8080/api/trade/67a96e57e0b6a51b9212d641/pledge
+cookie: access_token={{login2.response.body.$.accessToken}}
+accept: application/json
+content-type: application/json
+
+###
+
+PUT http://localhost:8080/api/trade/67a96e57e0b6a51b9212d641/completePhase/3
+cookie: access_token={{login1.response.body.$.accessToken}}
+accept: application/json
+content-type: application/json
+
+###
