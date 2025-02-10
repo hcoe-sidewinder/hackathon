@@ -46,3 +46,49 @@ export const getTradeById = async (req, res) => {
       .json({ message: "Cannot fetch trade with id", success: false });
   }
 };
+
+export const getByDonee = async (_req, res) => {
+  try {
+    const doneeId = res.locals.userId;
+
+    const trades = await Trade.find({ doneeId: doneeId }).populate({
+      path: "phaseId",
+      select: "phase amount boqImage completed",
+    });
+
+    return res.status(HTTP_STATUS_CODE.OK).json({
+      message: "Get Trade by Donee successful",
+      success: true,
+      data: trades,
+    });
+  } catch (error) {
+    console.log(`Cannot fetch users asked trade: ${error}`);
+
+    return res
+      .status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+      .json({ message: "Cannot fetch user asked trade", success: false });
+  }
+};
+
+export const getByDonor = async (_req, res) => {
+  try {
+    const donorId = res.locals.userId;
+
+    const trades = await Trade.find({ donorId: donorId }).populate({
+      path: "phaseId",
+      select: "phase amount boqImage completed",
+    });
+
+    return res.status(HTTP_STATUS_CODE.OK).json({
+      message: "Get Trade by Donee successful",
+      success: true,
+      data: trades,
+    });
+  } catch (error) {
+    console.log(`Cannot fetch users asked trade: ${error}`);
+
+    return res
+      .status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR)
+      .json({ message: "Cannot fetch user asked trade", success: false });
+  }
+};
