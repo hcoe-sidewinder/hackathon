@@ -1,4 +1,7 @@
+import jwt from "jsonwebtoken";
+
 import HTTP_STATUS_CODE from "../utils/status.codes.js";
+import { SECRET_KEY } from "../utils/constants.js";
 
 const validateUser = async (req, res, next) => {
   try {
@@ -15,7 +18,7 @@ const validateUser = async (req, res, next) => {
     let payload;
 
     try {
-      payload = jwt.verify(accessToken, SECRETKEY);
+      payload = jwt.verify(accessToken, SECRET_KEY);
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
         console.error(`Token expired: ${error}`);
@@ -40,7 +43,7 @@ const validateUser = async (req, res, next) => {
         .json({ message: "Authentication error" });
     }
 
-    req.locals.userId = payload.id;
+    res.locals.userId = payload.id;
 
     next();
   } catch (error) {
