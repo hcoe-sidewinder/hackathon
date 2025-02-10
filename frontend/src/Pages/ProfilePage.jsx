@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 import HistorySection from "../components/HistorySection";
+import { useTrade } from "../context/tradeContext";
 
 const ProfilePage = ({ user }) => {
   const auth2 = JSON.parse(localStorage.getItem("auth"));

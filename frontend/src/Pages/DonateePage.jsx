@@ -228,7 +228,7 @@ const DonateePage = () => {
                       onChange={(e) => setSeekingAmount(e.target.value)}
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment position="start">₹</InputAdornment>
+                          <InputAdornment position="start">Rs.</InputAdornment>
                         ),
                       }}
                       sx={{
@@ -302,7 +302,7 @@ const DonateePage = () => {
                         }
                         InputProps={{
                           startAdornment: (
-                            <InputAdornment position="start">₹</InputAdornment>
+                            <InputAdornment position="start">Rs</InputAdornment>
                           ),
                         }}
                         sx={{

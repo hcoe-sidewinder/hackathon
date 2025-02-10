@@ -50,7 +50,7 @@ const ChatBot = () => {
       {/* Floating Chat Button */}
       <button
         onClick={toggleChatbot}
-        className="text-black text-5xl w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-lg transition-transform transform hover:scale-110"
+        className="text-black w-16 h-16 rounded-full shadow-lg flex items-center justify-center text-lg transition-transform transform hover:scale-110"
       >
         <img src={chatBotIcon} />
       </button>

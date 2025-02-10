@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTrade } from "../context/tradeContext";
 
 const HistorySection = ({ historyView, setHistoryView }) => {
+  const { state, dispatch } = useTrade();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [uploadedBOQs, setUploadedBOQs] = useState({});
@@ -45,15 +47,15 @@ const HistorySection = ({ historyView, setHistoryView }) => {
         }`}
       >
         <ul>
-          {donorHistory.map((entry, index) => (
+          {state.donorTrades.map((entry, index) => (
             <li
               key={index}
               className={`flex justify-between p-3 rounded-md cursor-pointer ${
                 entry.stage === "completed" ? "bg-green-200" : "bg-yellow-200"
               }`}
-              onClick={() => openModal(entry.company, entry.stage)}
+              onClick={() => openModal(entry?.nob, entry?.completed)}
             >
-              <span className="font-semibold">{entry.company}</span>
+              <span className="font-semibold">{entry?.nob}</span>
               <span>{entry.stage}</span>
             </li>
           ))}
@@ -69,16 +71,16 @@ const HistorySection = ({ historyView, setHistoryView }) => {
         }`}
       >
         <ul>
-          {doneeHistory.map((entry, index) => (
+          {state.doneeTrades.map((entry, index) => (
             <li
               key={index}
               className={`flex justify-between p-3 rounded-md cursor-pointer ${
                 entry.stage === "completed" ? "bg-green-200" : "bg-yellow-200"
               }`}
-              onClick={() => openModal(entry.company, entry.stage)}
+              onClick={() => openModal(entry?.donorId.nob, entry?.completed)}
             >
-              <span className="font-semibold">{entry.company}</span>
-              <span>{entry.stage}</span>
+              <span className="font-semibold">{entry?.donorId?.nob}</span>
+              <span>{entry?.completed}</span>
             </li>
           ))}
         </ul>
