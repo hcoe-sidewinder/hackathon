@@ -69,7 +69,7 @@ const addTrade = async (req, res) => {
       phaseId: tradeBody.phases,
     });
 
-    const trade = await Trade.find({ _id: newTrade.id })
+    const trade = await Trade.findOne({ _id: newTrade.id })
       .populate({
         path: "donorId",
         select: "panNo name email nob phNo panImg profilePic bankId",
