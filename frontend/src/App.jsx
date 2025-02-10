@@ -20,7 +20,7 @@ const App = () => {
         ></Route>
 
         <Route
-          path="/donation-detail"
+          path="/donation-detail/:id"
           element={
             <DonationDetail
               donation={sampleDonation}
