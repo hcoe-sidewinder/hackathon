@@ -1,6 +1,31 @@
-import "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Button, Typography, Avatar, IconButton } from "@mui/material";
+import TradeCard from "../components/tradeCard"; // Adjust the path as needed
+import {
+  Box,
+  Button,
+  Typography,
+  Avatar,
+  Card,
+  CardContent,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+
+// Sample Data Array - This can be expanded in the future
+export const sampleUsers = [
+  {
+    doneeId: "12345",
+    donorId: "67890",
+    phaseId: "3",
+    nob: "Khatri Ceramics",
+    totalAmount: "500000",
+    desc: "I need the aforementioned amount to buy an electricity powered oven to replace the wood burning oven that i use to bake my pottery.",
+    panNo: "775976",
+  },
+  // More items can be added here
+];
 
 // Default placeholder for profile picture
 const defaultProfilePicture = "https://via.placeholder.com/150";
@@ -8,142 +33,129 @@ const defaultProfilePicture = "https://via.placeholder.com/150";
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const handleGoToDonateePage = () => {
-    navigate("/donatee"); // Navigate to the Donatee Page
-  };
-
   const handleGoToProfile = () => {
-    navigate("/profile"); // Navigate to Profile Page
+    navigate("/profile");
   };
 
   const handleLogout = () => {
-    // Handle Logout Logic here (e.g., clearing session, redirecting, etc.)
     console.log("Logged out!");
-    navigate("/login"); // Navigate to login page after logout
+    navigate("/login");
+  };
+
+  const handleGoToDonateePage = () => {
+    navigate("/donatee");
   };
 
   return (
-    <Box
-      sx={{
-        padding: 2,
-        background: "linear-gradient(to bottom right, #134E5E, #71C9CE)",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-    >
-      {/* Header Section (Navbar) */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "15%",
-          backgroundColor: "#0F2E3D",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px 20px",
-          margin: 0, // Ensuring no margin at the top
-          position: "fixed", // Fixed position to keep it at the top
-          top: 0, // Ensure it sticks to the top
-          zIndex: 9999, // Keep it above other content
-        }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img
-            src="https://via.placeholder.com/30" // Replace with your footprint logo
-            alt="Logo"
-            style={{ marginRight: 10 }}
-          />
-          <Typography
-            variant="h4"
-            sx={{
-              color: "#fff",
-              fontFamily: "'Roboto', sans-serif",
-              fontWeight: "bold",
-            }}
-          >
-            Hariyo Paila
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          {/* Profile Picture and Button */}
-          <IconButton onClick={handleGoToProfile} sx={{ padding: 0 }}>
-            <Avatar
-              alt="Profile Picture"
-              src={defaultProfilePicture}
+    <Box>
+      {/* Enhanced Header */}
+      <AppBar position="static" sx={{ backgroundColor: "#0F2E3D" }}>
+        <Toolbar
+          sx={{
+            height: 80, // Increased height
+            justifyContent: "space-between",
+            padding: "0 20px",
+          }}
+        >
+          {/* Left side - Title and Icon */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography
+              variant="h4"
               sx={{
-                width: 40,
-                height: 40,
-                marginRight: 2,
-                border: "2px solid #fff",
+                fontWeight: "bold",
+                color: "#fff",
+                fontFamily: "'Roboto', sans-serif",
+              }}
+            >
+              Hariyo Paila
+            </Typography>
+            <DirectionsWalkIcon
+              sx={{
+                color: "#4CAF50", // Green color
+                fontSize: 40,
               }}
             />
-          </IconButton>
+          </Box>
 
-          {/* Buttons */}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleGoToDonateePage}
-            sx={{
-              backgroundColor: "#134E5E",
-              marginRight: 2,
-              padding: "12px 20px",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#134E5E", // Darker shade on hover
-              },
-            }}
-          >
-            Announce Donation
-          </Button>
-          <Button
-            variant="contained"
-            color="primary" // Change to primary to match style
-            onClick={handleLogout}
-            sx={{
-              backgroundColor: "#134E5E",
-              padding: "12px 20px",
-              fontSize: "1rem",
-              fontWeight: "bold",
-              "&:hover": {
-                backgroundColor: "#134E5E", // Darker shade on hover
-              },
-            }}
-          >
-            Log Out
-          </Button>
-        </Box>
-      </Box>
+          {/* Right side - Buttons and Profile */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Button
+              variant="contained"
+              onClick={handleGoToDonateePage}
+              sx={{
+                backgroundColor: "#134E5E",
+                height: 40,
+                "&:hover": {
+                  backgroundColor: "#0d3b47",
+                },
+              }}
+            >
+              Announce Donation
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleLogout}
+              sx={{
+                backgroundColor: "#134E5E",
+                height: 40,
+                "&:hover": {
+                  backgroundColor: "#0d3b47",
+                },
+              }}
+            >
+              Log Out
+            </Button>
+            <Avatar
+              src={defaultProfilePicture}
+              sx={{
+                width: 50,
+                height: 50,
+                cursor: "pointer",
+              }}
+              onClick={handleGoToProfile}
+            />
+          </Box>
+        </Toolbar>
+      </AppBar>
 
-      {/* Content Section */}
-      <Box sx={{ marginTop: 10, width: "100%", padding: 2 }}>
-        {/* Your main content will go here */}
-      </Box>
-
-      {/* Footer Section */}
+      {/* Main Content */}
       <Box
         sx={{
-          marginTop: 4,
-          padding: "8px 16px",
-          backgroundColor: "#0F2E3D",
-          width: "100%",
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          textAlign: "center",
+          padding: 2,
+          background: "linear-gradient(to bottom right, #134E5E, #71C9CE)",
+          minHeight: "calc(100vh - 80px)", // Adjusted for new header height
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
-        <Typography
-          variant="body2"
-          sx={{ color: "#fff", fontFamily: "'Roboto', sans-serif" }}
+        <div className="grid grid-cols-4 gap-10">
+          {[1, 2, 3, 4, 5, 6, 7, 4, 3].map((_, index) => (
+            <TradeCard key={index} />
+          ))}
+        </div>
+
+        {/* Footer Section */}
+        <Box
+          sx={{
+            marginTop: 4,
+            padding: "8px 16px",
+            backgroundColor: "#0F2E3D",
+            width: "100%",
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            textAlign: "center",
+          }}
         >
-          &copy; 2025, All Rights Reserved.
-        </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: "#fff", fontFamily: "'Roboto', sans-serif" }}
+          >
+            &copy; 2025, All Rights Reserved.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

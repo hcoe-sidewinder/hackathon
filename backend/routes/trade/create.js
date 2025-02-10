@@ -60,7 +60,7 @@ const addTrade = async (req, res) => {
       }),
     );
 
-    await Trade.create({
+    const newTrade = await Trade.create({
       doneeId: userId,
       nob: tradeBody.nob,
       totalAmount: tradeBody.totalAmount,
@@ -69,9 +69,33 @@ const addTrade = async (req, res) => {
       phaseId: tradeBody.phases,
     });
 
-    return res
-      .status(HTTP_STATUS_CODE.OK)
-      .json({ message: "Trade created successfully", success: true });
+    const trade = await Trade.find({ _id: newTrade.id })
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
+
+    return res.status(HTTP_STATUS_CODE.OK).json({
+      message: "Trade created successfully",
+      success: true,
+      data: trade,
+    });
   } catch (error) {
     console.log(`Cannot create trade: ${error}`);
     return res.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).json({

@@ -34,7 +34,7 @@ const PaymentPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-bgColor to-transitionColor p-6">
+    <div className=" bg-black/50 backdrop-blur-sm flex justify-center items-center min-h-screen  p-6">
       <div className="bg-white/90 backdrop-blur-md shadow-lg rounded-2xl p-8 w-full max-w-lg text-center">
         <h2 className="text-2xl font-bold text-bgColor">Confirm Payment</h2>
         <p className="text-gray-600 mt-2">
@@ -43,7 +43,7 @@ const PaymentPage = () => {
         </p>
 
         {!otpSent && (
-          <div className="mt-6">
+          <div className="mt-6 ">
             <input
               type="password"
               placeholder="Enter your password"
@@ -66,7 +66,7 @@ const PaymentPage = () => {
         )}
 
         {otpSent && (
-          <div className="mt-6">
+          <div className="mt-6 ">
             <input
               type="text"
               placeholder="Enter OTP"

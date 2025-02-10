@@ -3,7 +3,12 @@ import express from "express";
 import validateUser from "../middleware/user.validate.js";
 
 import addTrade from "./trade/create.js";
-import { getTrades, getTradeById } from "./trade/read.js";
+import {
+  getTrades,
+  getTradeById,
+  getByDonee,
+  getByDonor,
+} from "./trade/read.js";
 import setDonor from "./trade/update.js";
 import completePhase from "./trade/phase/update.js";
 
@@ -11,6 +16,12 @@ const router = express.Router();
 
 //get trades
 router.get("/", getTrades);
+
+//get trade by donee id
+router.get("/asked", validateUser, getByDonee);
+
+//get trade by donor id
+router.get("/donated", validateUser, getByDonor);
 
 //get trade by id
 router.get("/:tradeId(\\w+)", getTradeById);

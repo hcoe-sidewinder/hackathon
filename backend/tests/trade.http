@@ -30,14 +30,14 @@ content-type: application/json
 cookie: access_token={{login1.response.body.$.accessToken}}
 
 {
-  "nob": "Test",
-  "totalAmount": 1900,
-  "desc": "Tealsjdaksdjhasklfhjaljsdh akjhd akljhfkjhs",
-  "panNo": "2108937138904723",
+  "nob": "Sidewinder Inv",
+  "totalAmount": 20000,
+  "desc": "Tealsjdasdasdaksdjhasklfhjaljsdh akjhd akljhfkjhs",
+  "panNo": "1234564789",
   "phases": [
     {
       "phase": 1,
-      "amount": 300
+      "amount": 100
     },
     {
       "phase": 2,
@@ -45,7 +45,11 @@ cookie: access_token={{login1.response.body.$.accessToken}}
     },
     {
       "phase": 3,
-      "amount": 500 
+      "amount": 300 
+    },
+    {
+      "phase": 4,
+      "amount": 400
     }
   ]
 }
@@ -64,14 +68,28 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:8080/api/trade/67a96e57e0b6a51b9212d641/pledge
+GET http://localhost:8080/api/trade/asked
+cookie: access_token={{login1.response.body.$.accessToken}}
+accept: application/json
+content-type: application/json
+
+###
+
+GET http://localhost:8080/api/trade/donated
 cookie: access_token={{login2.response.body.$.accessToken}}
 accept: application/json
 content-type: application/json
 
 ###
 
-PUT http://localhost:8080/api/trade/67a96e57e0b6a51b9212d641/completePhase/3
+PUT http://localhost:8080/api/trade/67a9acefe9ce9245de3c2798/pledge
+cookie: access_token={{login2.response.body.$.accessToken}}
+accept: application/json
+content-type: application/json
+
+###
+
+PUT http://localhost:8080/api/trade/67a9acefe9ce9245de3c2798/completePhase/5
 cookie: access_token={{login1.response.body.$.accessToken}}
 accept: application/json
 content-type: application/json

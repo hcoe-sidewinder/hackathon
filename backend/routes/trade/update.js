@@ -30,7 +30,28 @@ const setDonor = async (req, res) => {
         $set: { donorId: userId },
       },
       { new: true },
-    );
+    )
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
+
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Donor set successfully",
       success: true,

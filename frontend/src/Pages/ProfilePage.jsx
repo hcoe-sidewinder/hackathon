@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { Edit, Phone, Building2, CreditCard, Building } from "lucide-react";
+import { useAuth } from "../context/authContext";
 
 const ProfilePage = ({ user }) => {
+  const auth2 = JSON.parse(localStorage.getItem("auth"));
+  const test = localStorage.getItem("auth");
+  const auth = JSON.parse(test);
+  // console.log(test);
+  // console.log(typeof test);
+  // console.log(auth);
+  // console.log(auth.name);
+  // // console.log(auth);
+  // console.log(auth2);
+  console.log(auth)
   const [activeSection, setActiveSection] = useState("Contact Details");
 
   const Section = ({ title, icon, children }) => (
@@ -15,7 +26,6 @@ const ProfilePage = ({ user }) => {
         cursor-pointer relative overflow-hidden`}
       onClick={() => setActiveSection(activeSection === title ? null : title)}
     >
-      
       <div
         className={`absolute inset-0 bg-bgColor/5 transition-opacity duration-500
         ${activeSection === title ? "opacity-100" : "opacity-0"}`}
@@ -52,12 +62,11 @@ const ProfilePage = ({ user }) => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-bgColor to-transitionColor p-6">
       <div className="bg-cardColor backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-4xl p-8 transition-all duration-300 hover:shadow-2xl">
-      
         {/* for profile picture */}
         <div className="flex items-center gap-6 border-b pb-6 group">
           <div className="relative">
             <img
-              src={user.profilePicture}
+              src={auth.profilePic}
               alt="Profile"
               className="w-24 h-24 rounded-full border-4 border-[#134E5E] shadow-md transition-all duration-300 group-hover:scale-105"
             />
@@ -65,20 +74,20 @@ const ProfilePage = ({ user }) => {
           </div>
           <div className="transform transition-all duration-300 group-hover:translate-x-2">
             <h2 className="text-3xl font-bold text-[#134E5E] mb-1">
-              {user.userName}
+              {auth.name}
             </h2>
-            <p className="text-gray-600 text-sm">{user.email}</p>
+            <p className="text-gray-600 text-sm">{auth.email}</p>
           </div>
         </div>
 
-       {/* for other details */}
+        {/* for other details */}
         <Section title="Contact Details" icon={<Phone className="w-6 h-6" />}>
           <div className="space-y-2 pt-4">
             <p className="text-gray-700">
-              <strong>Phone:</strong> {user.phoneNumber}
+              <strong>Phone:</strong> {auth.phNo}
             </p>
             <p className="text-gray-700">
-              <strong>Company:</strong> {user.companyName}
+              <strong>Company:</strong> {auth.nob}
             </p>
           </div>
         </Section>
@@ -89,15 +98,15 @@ const ProfilePage = ({ user }) => {
         >
           <div className="space-y-4 pt-4">
             <p className="text-gray-700">
-              <strong>PAN Number:</strong> {user.panNumber}
+              <strong>PAN Number:</strong> {auth.panNo}
             </p>
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <img
-                src={user.panImage}
+                src={auth.panImage}
                 alt="PAN Card"
                 className="w-full max-w-sm border rounded-md shadow-md transition-all duration-300 hover:scale-105"
               />
-            </div>
+            </div> */}
           </div>
         </Section>
 
@@ -107,13 +116,13 @@ const ProfilePage = ({ user }) => {
         >
           <div className="space-y-2 pt-4">
             <p className="text-gray-700">
-              <strong>Bank Name:</strong> {user.bankName}
+              <strong>Bank Name:</strong> {auth.bankId.bankName}
             </p>
             <p className="text-gray-700">
-              <strong>Account Number:</strong> {user.bankAccountNumber}
+              <strong>Account Number:</strong> {auth.bankId.accNo}
             </p>
             <p className="text-gray-700">
-              <strong>Account Name:</strong> {user.accountName}
+              <strong>Account Name:</strong> {auth.bankId.accName}
             </p>
           </div>
         </Section>

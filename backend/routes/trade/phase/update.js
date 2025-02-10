@@ -6,7 +6,7 @@ import HTTP_STATUS_CODE from "../../../utils/status.codes.js";
 const completePhase = async (req, res) => {
   try {
     const tradeId = req.params.tradeId;
-    const phase = req.params.phase;
+    const phase = Number(req.params.phase);
     const userId = res.locals.userId;
 
     const trade = await Trade.findOne({ _id: tradeId }).populate({
@@ -14,7 +14,7 @@ const completePhase = async (req, res) => {
       select: "phase amount boqImage completed",
     });
 
-    if (userId !== trade.doneeId) {
+    if (userId != trade.doneeId) {
       console.log(`Only donee can complete phases`);
       return res
         .status(HTTP_STATUS_CODE.BAD_REQUEST)
@@ -39,10 +39,17 @@ const completePhase = async (req, res) => {
       });
     }
 
+    if (phase > trade.phaseId.length) {
+      console.log("Phase does not exists");
+
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({
+        message: "Phase does not exists",
+        success: false,
+      });
+    }
+
     for (let index = phase - 2; index >= 0; index--) {
       const element = trade.phaseId[index];
-
-      console.log(`Inside loop: element: ${element}`);
 
       if (!element.completed) {
         console.log("Previous phases need to be completed");
@@ -63,10 +70,35 @@ const completePhase = async (req, res) => {
       },
     );
 
-    const updatedTrade = await Trade.findOne({ _id: tradeId }).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const lastPhase = phase == trade.phaseId.length;
+
+    const updatedTrade = await Trade.findByIdAndUpdate(
+      { _id: tradeId },
+      {
+        $set: { completed: lastPhase },
+      },
+      { new: true },
+    )
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Phase updated successfully",
