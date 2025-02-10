@@ -332,11 +332,17 @@ const ProfilePage = ({ user }) => {
                     : "translate-x-full opacity-0"
                 }`}
               >
-                <p className="text-gray-700">Donor History Data...
-                </p>
-                <div>
-                  
-                </div>
+                <ul>
+                  <li className="text-gray-700 flex justify-between">
+                    Sidewinder Technology<span>ongoing</span>
+                  </li>
+                  <li className="text-gray-700 flex justify-between">
+                    Kathmandu Limitedss <span>ongoing</span>
+                  </li>
+                  <li className="text-gray-700 flex justify-between">
+                    Lalitpur Limitedss <span>completed</span>
+                  </li>
+                </ul>
               </div>
 
               {/* Donee History */}
@@ -347,7 +353,17 @@ const ProfilePage = ({ user }) => {
                     : "-translate-x-full opacity-0"
                 }`}
               >
-                <p className="text-gray-700">Donee History Data...</p>
+                <ul>
+                  <li className="text-gray-700 flex justify-between">
+                    Hearald Industry<span>ongoing</span>
+                  </li>
+                  <li className="text-gray-700 flex justify-between">
+                    Hair Dresser <span>ongoing</span>
+                  </li>
+                  <li className="text-gray-700 flex justify-between">
+                    Lalitpur Jackets <span>completed</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
