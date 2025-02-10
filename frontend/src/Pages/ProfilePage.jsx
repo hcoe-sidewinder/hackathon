@@ -65,7 +65,7 @@ const ProfilePage = ({ user }) => {
           </div>
           <div className="transform transition-all duration-300 group-hover:translate-x-2">
             <h2 className="text-3xl font-bold text-[#134E5E] mb-1">
-              {user.fullName}
+              {user.userName}
             </h2>
             <p className="text-gray-600 text-sm">{user.email}</p>
           </div>

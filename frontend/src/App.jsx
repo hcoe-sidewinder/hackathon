@@ -3,6 +3,7 @@ import LoginPage from "./Pages/LoginPage";
 import ProfilePage from "./Pages/ProfilePage";
 import { sampleDonation, sampleUser } from "./assets/sampleData";
 import DonationDetail from "./Pages/DonationDetail";
+import PaymentPage from "./Pages/PaymentPage";
 
 const App = () => {
   return (
@@ -15,7 +16,19 @@ const App = () => {
         ></Route>
         <Route
           path="/donation-detail"
-          element={<DonationDetail donation={sampleDonation} onBack={()=>navigate("/home")}/>} 
+          element={
+            <DonationDetail
+              donation={sampleDonation}
+              onBack={() => navigate("/home")}
+            />
+          }
+        ></Route>
+        <Route
+          path="/payment"
+          element={
+            <PaymentPage
+            />
+          }
         ></Route>
       </Routes>
     </BrowserRouter>
