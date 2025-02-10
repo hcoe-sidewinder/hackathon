@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TradeCard from "../components/tradeCard"; // Adjust the path as needed
+import TradeCard from "../components/tradeCard";
 import {
   Box,
   Button,
@@ -12,25 +12,61 @@ import {
   Toolbar,
 } from "@mui/material";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-
-// Sample Data Array - This can be expanded in the future
-export const sampleUsers = [
-  {
-    doneeId: "12345",
-    donorId: "67890",
-    phaseId: "3",
-    nob: "Khatri Ceramics",
-    totalAmount: "500000",
-    desc: "I need the aforementioned amount to buy an electricity powered oven to replace the wood burning oven that i use to bake my pottery.",
-    panNo: "775976",
-  },
-  // More items can be added here
-];
-
-// Default placeholder for profile picture
-const defaultProfilePicture = "https://via.placeholder.com/150";
+import axios from "axios";
+import { useTrade } from "../context/tradeContext";
+import { Cookie } from "lucide-react";
 
 const HomePage = () => {
+  const { state, dispatch } = useTrade();
+  useEffect(() => {
+    const getAllTasks = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}trade`,
+        {},
+        {
+          Headers: {
+            Cookie: { access_token: localStorage.getItem("token") },
+          },
+        }
+      );
+      if (response.data.success) {
+        console.log(response.data.data);
+        dispatch({ type: "set_allTrades", payload: response.data.data });
+      }
+    };
+    getAllTasks();
+  }, []);
+  useEffect(() => {
+    const getdoneeTasks = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}trade/asked`,
+        { withCredentials: true }
+      );
+      if (response.data.success) {
+        console.log(response.data.data);
+        dispatch({ type: "set_doneeTrades", payload: response.data.data });
+      }
+    };
+    getdoneeTasks();
+  }, []);
+  useEffect(() => {
+    const getdonorTasks = async () => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}trade/donated`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        console.log(response.data.data);
+        dispatch({ type: "set_donorTrades", payload: response.data.data });
+      }
+    };
+    getdonorTasks();
+  }, []);
+  const authString = localStorage.getItem("auth");
+  const auth = JSON.parse(authString);
+  // console.log(auth);
   const navigate = useNavigate();
 
   const handleGoToProfile = () => {
@@ -48,7 +84,6 @@ const HomePage = () => {
 
   return (
     <Box>
-      {/* Enhanced Header */}
       <AppBar position="static" sx={{ backgroundColor: "#0F2E3D" }}>
         <Toolbar
           sx={{
@@ -106,7 +141,7 @@ const HomePage = () => {
               Log Out
             </Button>
             <Avatar
-              src={defaultProfilePicture}
+              src={auth.profilePic}
               sx={{
                 width: 50,
                 height: 50,

@@ -1,4 +1,10 @@
-const tradeReducer = ({ state, action }) => {
+const initialState = {
+  allTrades: [],
+  doneeTrades: [],
+  donorTrades: [],
+};
+
+const tradeReducer = (state = initialState, action) => {
   switch (action.type) {
     case "set_allTrades":
       return { ...state, allTrades: action.payload };
@@ -10,7 +16,7 @@ const tradeReducer = ({ state, action }) => {
       return {
         ...state,
         allTrades: [...state.allTrades, action.payload],
-        doneeTrades: [...state, doneeTrades, action.payload],
+        doneeTrades: [...state.doneeTrades, action.payload],
       };
     case "pledgeTrade":
       return {
@@ -27,3 +33,5 @@ const tradeReducer = ({ state, action }) => {
       };
   }
 };
+
+export default tradeReducer;

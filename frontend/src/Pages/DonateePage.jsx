@@ -13,14 +13,19 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { sampleUser } from "../assets/sampleDetails"; // Import the sample data
+import axios from "axios";
+import { toast } from "sonner";
+import { useTrade } from "../context/tradeContext";
 
 const defaultProfilePicture = "https://via.placeholder.com/150"; // Default placeholder for profile picture
 
 const DonateePage = ({ onPublish }) => {
+  const authString = localStorage.getItem("auth");
+  const auth = JSON.parse(authString);
+  const { state, dispatch } = useTrade();
   const navigate = useNavigate();
 
   const [donateeData, setDonateeData] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(defaultProfilePicture);
   const [numPhases, setNumPhases] = useState(1);
   const [amountsPerPhase, setAmountsPerPhase] = useState([""]);
   const [seekingAmount, setSeekingAmount] = useState("");
@@ -30,11 +35,10 @@ const DonateePage = ({ onPublish }) => {
   useEffect(() => {
     const fetchedDonateeData = {
       seekingAmount: "",
-      reason: "To invest in an electric delivery van",
+      reason: "",
     };
 
     setDonateeData(fetchedDonateeData);
-    setProfilePicture(defaultProfilePicture);
   }, []);
 
   const handleBackToHome = () => {
@@ -53,7 +57,7 @@ const DonateePage = ({ onPublish }) => {
     setAmountsPerPhase(newAmounts);
   };
 
-  const handlePublish = () => {
+  const handlePublish = async () => {
     const totalAmount = amountsPerPhase.reduce(
       (acc, amount) => acc + parseInt(amount || 0),
       0
@@ -63,16 +67,38 @@ const DonateePage = ({ onPublish }) => {
       return;
     }
 
-    const formData = {
-      businessName: sampleUser.nob, // Use sampleUser data
-      panCardNumber: sampleUser.panNo, // Use sampleUser data
-      seekingAmount: seekingAmount,
-      reason: reason,
-      numPhases: numPhases,
-      amountsPerPhase: amountsPerPhase,
+    const sendData = {
+      nob: auth.nob,
+      totalAmount: seekingAmount,
+      desc: reason,
+      panNo: auth.panNo,
+      phases: amountsPerPhase.map((item, index) => {
+        console.log(item);
+        console.log(index + 1);
+        return { phase: ++index, amount: item };
+      }),
     };
-    console.log("Form Data to be Published:", formData);
-    if (onPublish) onPublish(formData); // Call the passed in onPublish function
+    console.log(sendData);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}trade/add`,
+        sendData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.data.success) {
+        console.log("response aako", response.data.data);
+        dispatch({ type: "addTrades", payload: response.data.data });
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log("donatepage:", error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -107,7 +133,7 @@ const DonateePage = ({ onPublish }) => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Avatar
               alt="Profile Picture"
-              src={profilePicture}
+              src={auth.profilePic}
               sx={{
                 width: 100, // Larger profile picture size
                 height: 100,
@@ -122,10 +148,10 @@ const DonateePage = ({ onPublish }) => {
                 variant="h4" // Larger heading for the card
                 sx={{ color: "#134E5E", fontWeight: "bold" }}
               >
-                {sampleUser.nob} {/* Use sampleUser business name */}
+                {auth.nob} {/* Use sampleUser business name */}
               </Typography>
               <Typography variant="body2" sx={{ color: "gray" }}>
-                doneeemail@example.com
+                {auth.email}
               </Typography>
             </Box>
           </Box>
@@ -149,7 +175,7 @@ const DonateePage = ({ onPublish }) => {
                 align="center"
                 sx={{ marginBottom: 2, color: "#134E5E", fontSize: "1.8rem" }} // Larger font size for heading
               >
-                Donatee Details
+                Donee Details
               </Typography>
 
               <form>
@@ -160,7 +186,7 @@ const DonateePage = ({ onPublish }) => {
                       label="Business Name"
                       variant="outlined"
                       fullWidth
-                      value={sampleUser.nob} // Use sampleUser business name
+                      value={auth.nob} // Use sampleUser business name
                       sx={{
                         backgroundColor: "#fff",
                         borderRadius: 1,
@@ -179,7 +205,7 @@ const DonateePage = ({ onPublish }) => {
                       label="PAN Card Number"
                       variant="outlined"
                       fullWidth
-                      value={sampleUser.panNo} // Use sampleUser pan number
+                      value={auth.panNo} // Use sampleUser pan number
                       sx={{
                         backgroundColor: "#fff",
                         borderRadius: 1,
