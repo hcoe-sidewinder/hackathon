@@ -1,12 +1,12 @@
 ###
-# @nam getUsers
+# @name getUsers
 
 GET http://localhost:8080/api/user/
 accept: application/json
 content-type: application/json
 
 ###
-# @nam getUsersById
+# @name getUsersById
 
 GET http://localhost:8080/api/user/67a8b3cc034cd653f080fecb
 accept: application/json
