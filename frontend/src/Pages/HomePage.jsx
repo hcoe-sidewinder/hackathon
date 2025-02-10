@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import TradeCard from "../components/tradeCard"; // Adjust the path as needed
 import {
   Box,
   Button,
@@ -129,42 +130,11 @@ const HomePage = () => {
           flexDirection: "column",
         }}
       >
-        {/* Scalable Cards */}
-        {sampleUsers.map((user, index) => (
-          <Card
-            key={user.doneeId || index}
-            sx={{
-              boxShadow: 3,
-              borderRadius: 2,
-              padding: 4,
-              maxWidth: 600,
-              width: "100%",
-              marginTop: 3,
-              backgroundColor: "#f5f5f5",
-            }}
-          >
-            <CardContent>
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: "bold", color: "#134E5E" }}
-              >
-                Introduction: {user.nob}
-              </Typography>
-              <Typography variant="body1" sx={{ marginTop: 1 }}>
-                <strong>Phase ID:</strong> {user.phaseId}
-              </Typography>
-              <Typography variant="body1" sx={{ marginTop: 1 }}>
-                <strong>Amount Needed:</strong> {user.totalAmount}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: 1 }}>
-                <strong>Description:</strong> {user.desc}
-              </Typography>
-              <Typography variant="body2" sx={{ marginTop: 1 }}>
-                <strong>PAN No:</strong> {user.panNo}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+        <div className="grid grid-cols-4 gap-10">
+          {[1, 2, 3, 4, 5, 6, 7, 4, 3].map((_, index) => (
+            <TradeCard key={index} />
+          ))}
+        </div>
 
         {/* Footer Section */}
         <Box
