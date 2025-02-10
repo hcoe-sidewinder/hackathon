@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     // Check if both email and password are provided
     if (!user.email || !user.password) {
-        toast.error("Please enter both email and password.");
+      toast.error("Please enter both email and password.");
       return;
     }
 
