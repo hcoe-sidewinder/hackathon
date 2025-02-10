@@ -1,11 +1,21 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TradeCard from "../components/TradeCard";
-import { Box, Typography } from "@mui/material";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
+import {
+  Box,
+  Button,
+  Typography,
+  Avatar,
+  AppBar,
+  Toolbar,
+} from "@mui/material";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import axios from "axios";
+import { useTrade } from "../context/tradeContext";
 
 // Sample Data Array - yo chai pachi hatauda huncha...backend bata data fetch garera lyaune
 export const sampleUsers = [
@@ -68,21 +78,6 @@ export const sampleUsers = [
 
 // yo chai profile picture ko default value
 const defaultProfilePicture = "https://via.placeholder.com/150";
-import TradeCard from "../assets/components/tradeCard";
-import {
-  Box,
-  Button,
-  Typography,
-  Avatar,
-  Card,
-  CardContent,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-import axios from "axios";
-import { useTrade } from "../context/tradeContext";
-import { Cookie } from "lucide-react";
 
 const HomePage = () => {
   const { state, dispatch } = useTrade();
@@ -142,78 +137,13 @@ const HomePage = () => {
     (card) => !(card.donorId && card.doneeId)
   );
 
+  const handleGoToDonateePage = () => {};
+  const handleLogout = () => {};
+  const handleGoToProfile = () => {};
   return (
     <Box>
       <Header />
       <Hero />
-      <AppBar position="static" sx={{ backgroundColor: "#0F2E3D" }}>
-        <Toolbar
-          sx={{
-            height: 80, // Increased height
-            justifyContent: "space-between",
-            padding: "0 20px",
-          }}
-        >
-          {/* Left side - Title and Icon */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: "bold",
-                color: "#fff",
-                fontFamily: "'Roboto', sans-serif",
-              }}
-            >
-              Hariyo Paila
-            </Typography>
-            <DirectionsWalkIcon
-              sx={{
-                color: "#4CAF50", // Green color
-                fontSize: 40,
-              }}
-            />
-          </Box>
-
-          {/* Right side - Buttons and Profile */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Button
-              variant="contained"
-              onClick={handleGoToDonateePage}
-              sx={{
-                backgroundColor: "#134E5E",
-                height: 40,
-                "&:hover": {
-                  backgroundColor: "#0d3b47",
-                },
-              }}
-            >
-              Announce Donation
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleLogout}
-              sx={{
-                backgroundColor: "#134E5E",
-                height: 40,
-                "&:hover": {
-                  backgroundColor: "#0d3b47",
-                },
-              }}
-            >
-              Log Out
-            </Button>
-            <Avatar
-              src={auth.profilePic}
-              sx={{
-                width: 50,
-                height: 50,
-                cursor: "pointer",
-              }}
-              onClick={handleGoToProfile}
-            />
-          </Box>
-        </Toolbar>
-      </AppBar>
 
       {/* Main Content */}
       <Box

@@ -41,7 +41,7 @@ const Header = () => {
         </nav>
         <div className="flex space-x-4 mt-4 lg:mt-0">
           <a
-            href="#"
+            href="/donatee"
             className="bg-[#060621] text-white px-4 py-2 rounded-md hover:bg-[#71C9CE] hover:text-white transition duration-300 flex items-center"
           >
             <Megaphone className="h-5 w-5 mr-2" />
