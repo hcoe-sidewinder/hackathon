@@ -6,7 +6,7 @@ import Phase from "../../models/phase.schema.js";
 const addTrade = async (req, res) => {
   try {
     const tradeBody = req.body;
-    const userId = req.locals.userId;
+    const userId = res.locals.userId;
 
     switch (true) {
       case !tradeBody.nob:
