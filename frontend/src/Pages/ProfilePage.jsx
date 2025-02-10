@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Edit, Phone, Building2, CreditCard, Building } from "lucide-react";
 import { useAuth } from "../context/authContext";
 

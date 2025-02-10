@@ -9,7 +9,7 @@ export default {
         textColor: "#134E5E",
         cardColor: "#d7e6e8",
         activeCardColor: "#eff4f5",
-        inactiveCardColor: "#eff4f5",
+        inactiveCardColor: "#edf6f7",
         hoverColor: "#0F2E3D",
         transitionColor: "#71C9CE",
       },
