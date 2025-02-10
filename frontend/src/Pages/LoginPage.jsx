@@ -1,8 +1,9 @@
 import loginImage from "../assets/loginImage.svg";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { CreditCard, Lock } from "lucide-react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -13,15 +14,12 @@ const LoginPage = () => {
 
   const changeEventHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-    console.log(user);
   };
 
   const loginHandler = async (e) => {
     e.preventDefault();
-
-    // Check if both email and password are provided
     if (!user.panNumber || !user.password) {
-      toast.error("Please enter both email and password.");
+      toast.error("Please enter both PAN number and password.");
       return;
     }
 
@@ -38,7 +36,6 @@ const LoginPage = () => {
       );
 
       if (response.data.success) {
-        // Save the authentication token in localStorage
         localStorage.setItem("auth_token", response.data.accessToken);
         toast.success("Login successful!");
         navigate("/home");
@@ -50,66 +47,106 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="h-screen m-0 bg-main pt-24 p-5">
-      <section className="flex bg-gray-100 shadow-gray-500 shadow-lg h-[95%] p-0 md:p-10 ">
-        <div className="bg-white shadow-gray-500 shadow-md rounded-md p-8 w-full md:w-[40%]">
-          {/* Login Fields */}
-          <div className="my-5">
-            <span className="font-semibold text-3xl">Login</span>
-            <p className="text-gray-300">
-              Don&apos;t have an account?{" "}
-              <a className="text-blue-500" href="/signup">
-                Sign Up
-              </a>
-            </p>
+    <main className="min-h-screen bg-gradient-to-br from-bgColor to-transitionColor flex items-center justify-center">
+      <section className="bg-cardColor backdrop-blur-md shadow-xl rounded-md overflow-hidden w-full max-w-5xl transition-all duration-300 hover:shadow-2xl">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 p-8">
+            <div className="mb-8 transform transition-all duration-300 hover:translate-x-2">
+              <h2 className="text-3xl font-bold text-textColor mb-2">Login</h2>
+              <p className="text-gray-600">
+                Don&apos;t have an account?{" "}
+                <a
+                  className="text-bgColor hover:text-hoverColor transition-colors duration-300"
+                  href="/signup"
+                >
+                  Sign Up
+                </a>
+              </p>
+            </div>
+
+            <form onSubmit={loginHandler} className="space-y-6">
+              <div className="group">
+                <label
+                  htmlFor="panNumber"
+                  className="flex items-center gap-2 text-textColor mb-2 font-medium"
+                >
+                  <CreditCard className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                  PAN Number
+                </label>
+                <input
+                  id="panNumber"
+                  className="w-full bg-white/50 border border-bgColor/20 rounded-md p-3 
+                           transition-all duration-300 focus:ring-2 focus:ring-bgColor/30 
+                           focus:border-transparent outline-none"
+                  type="number"
+                  required
+                  name="panNumber"
+                  value={user.panNumber}
+                  onChange={changeEventHandler}
+                />
+              </div>
+
+              <div className="group">
+                <label
+                  htmlFor="password"
+                  className="flex items-center gap-2 text-textColor mb-2 font-medium"
+                >
+                  <Lock className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                  Password
+                </label>
+                <input
+                  id="password"
+                  className="w-full bg-white/50 border border-bgColor/20 rounded-md p-3 
+                           transition-all duration-300 focus:ring-2 focus:ring-bgColor/30 
+                           focus:border-transparent outline-none"
+                  type="password"
+                  required
+                  name="password"
+                  value={user.password}
+                  onChange={changeEventHandler}
+                />
+              </div>
+
+              <div className="flex items-center gap-2 group">
+                <input
+                  id="remember-me"
+                  type="checkbox"
+                  className="rounded border-bgColor/20 text-bgColor 
+                           focus:ring-bgColor/30 transition-all duration-300"
+                />
+                <label
+                  htmlFor="remember-me"
+                  className="text-gray-600 text-sm group-hover:text-textColor 
+                           transition-colors duration-300"
+                >
+                  Remember me
+                </label>
+              </div>
+
+              {/* Login Button */}
+              <button
+                type="submit"
+                className="w-full group flex items-center justify-center gap-2 bg-bgColor text-white 
+                         px-6 py-3 rounded-md transition-all duration-300 hover:bg-hoverColor 
+                         hover:shadow-lg active:scale-95"
+              >
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  Login
+                </span>
+              </button>
+            </form>
           </div>
-          <form onSubmit={loginHandler} className="flex flex-col gap-4">
-            {/* Email Field */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email">Pan Number</label>
-              <input
-                id="panNumber"
-                className="border border-gray-200 h-9 rounded-md p-2"
-                type="number"
-                required
-                name="panNumber"
-                value={user.panNumber}
-                onChange={changeEventHandler}
-              />
-            </div>
-            {/* Password Field */}
-            <div className="flex flex-col gap-1">
-              <label htmlFor="password">Password</label>
-              <input
-                id="password"
-                className="border border-gray-200 h-9 rounded-md p-2"
-                type="password"
-                required
-                name="password"
-                value={user.password}
-                onChange={changeEventHandler}
-              />
-            </div>
-            {/* Remember Me */}
-            <div className="flex items-center gap-2">
-              <input id="remember-me" type="checkbox" />
-              <label htmlFor="remember-me" className="text-xs text-gray-400">
-                Remember me
-              </label>
-            </div>
-            {/* Login Button */}
-            <button
-              type="submit"
-              className="bg-main p-2 rounded-lg font-semibold text-lg"
-            >
-              Login
-            </button>
-            {/* Divider */}
-          </form>
-        </div>
-        {/* Image Section */}
-        <div className="hidden md:flex justify-center items-center">
-          <img className="h-full" src={loginImage} alt="Login illustration" />
+
+          <div
+            className="hidden md:flex md:w-1/2 bg-gradient-to-br from-bgColor/10 to-transitionColor/10 
+                         justify-center items-center p-8"
+          >
+            <img
+              src={loginImage}
+              alt="Login illustration"
+              className="max-h-96 transition-all duration-300 hover:scale-105"
+            />
+          </div>
         </div>
       </section>
     </main>

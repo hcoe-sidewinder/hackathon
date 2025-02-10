@@ -4,6 +4,7 @@ import validateUser from "../middleware/user.validate.js";
 
 import addTrade from "./trade/create.js";
 import { getTrades, getTradeById } from "./trade/read.js";
+import setDonor from "./trade/update.js";
 import completePhase from "./trade/phase/update.js";
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.get("/:tradeId(\\w+)", getTradeById);
 router.post("/add", validateUser, addTrade);
 
 // edit trade by id
-//router.put("/edit/:userId(\\d+)", editUser);
+router.put("/:tradeId(\\w+)/pledge", validateUser, setDonor);
 
 // complete phase by trade id
 router.put(
