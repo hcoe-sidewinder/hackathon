@@ -1,4 +1,5 @@
-import { Leaf, Megaphone, LogOut } from "lucide-react";
+import { Avatar } from "@mui/material";
+import { Leaf, Megaphone, LogOut, Box } from "lucide-react";
 
 const Header = () => {
   return (
@@ -53,6 +54,23 @@ const Header = () => {
           >
             <LogOut className="h-5 w-5 mr-2" />
             Log Out
+          </a>
+          <a>
+            <Box
+              sx={{
+                display: "flex",
+                align: "center",
+                mb: 3,
+                height: 100,
+                width: 100,
+                borderRadius: 1,
+              }}
+            >
+              <img
+                src="../access/pfp.jpg"
+                sx={{ width: 100, height: 100, mr: 0, padding: 1 }}
+              />
+            </Box>
           </a>
         </div>
       </div>

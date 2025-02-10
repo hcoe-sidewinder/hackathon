@@ -50,39 +50,49 @@ function TradeCard({
             display: "flex",
             align: "center",
             flexDirection: "column",
-            marginLeft: 10,
+            marginLeft: 3,
+            marginRight: 3,
+            marginTop: 1,
           }}
         >
           <Box sx={{ display: "flex", align: "center", mb: 3 }}>
             <Avatar
               src={profilePic || "/placeholder.svg"}
-              sx={{ width: 60, height: 60, mr: 15, padding: 1 }}
+              sx={{ width: 100, height: 100, mr: 3, padding: 1 }}
             />
             <Box>
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 {nob}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Phase ID: {phaseid}
-              </Typography>
+
               <Typography
-                variant="body2"
-                sx={{ mb: 1, flex: 1, overflow: "auto" }}
+                variant="body1"
+                sx={{ flex: 1, overflow: "auto", textWrap: "wrap", mb: 0 }}
               >
                 <strong>Description:</strong> {desc}
               </Typography>
             </Box>
           </Box>
 
-          <Divider sx={{ my: 1 }} />
+          <Divider
+            sx={{
+              mt: 0,
+              width: "100%",
+              align: "center",
+              mr: "3",
+              color: "gray-800",
+            }}
+          />
 
-          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-            {nob}
-          </Typography>
           <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Amount Needed:</strong> {total}
           </Typography>
-          <Typography variant="body2">
+
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            <strong>Total Phases: </strong> {phaseid}
+          </Typography>
+
+          <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>PAN No:</strong> {panno}
           </Typography>
         </CardContent>

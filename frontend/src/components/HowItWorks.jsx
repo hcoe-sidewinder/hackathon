@@ -11,25 +11,25 @@ const Step = ({ icon, title, description }) => (
 const HowItWorks = () => {
   const steps = [
     {
-      icon: <BarChart className="h-8 w-8 text-white" />,
+      icon: <BarChart className="h-5 w-8 text-white" />,
       title: "Measure Impact",
       description:
         "We assess your company's environmental impact and energy usage.",
     },
     {
-      icon: <RefreshCw className="h-8 w-8 text-white" />,
+      icon: <RefreshCw className="h-5 w-8 text-white" />,
       title: "Implement Changes",
       description:
         "Implement eco-friendly practices and energy-saving measures.",
     },
     {
-      icon: <Award className="h-8 w-8 text-white" />,
+      icon: <Award className="h-5 w-8 text-white" />,
       title: "Earn Credits",
       description:
         "Receive energy credits for your positive environmental actions.",
     },
     {
-      icon: <TrendingUp className="h-8 w-8 text-white" />,
+      icon: <TrendingUp className="h-5 w-8 text-white" />,
       title: "Trade & Benefit",
       description:
         "Trade credits with other businesses or use them for incentives.",

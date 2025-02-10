@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 import { toast } from "sonner";
+import TaxCalculator from "../components/TaxCalculator";
 
 const DonationDetail = ({ donation, onBack }) => {
   const { state, dispatch } = useTrade();
@@ -153,13 +154,15 @@ const DonationDetail = ({ donation, onBack }) => {
           </div>
         </Section>
 
+        <TaxCalculator />
+
         <div className="flex justify-center mt-8">
           <button
             onClick={() => setShowPledgeModal(true)}
             className="group flex items-center gap-2 bg-bgColor text-white px-8 py-4 rounded-md 
             transition-all duration-300 hover:bg-hoverColor hover:shadow-lg active:scale-95"
           >
-            <HandCoins className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+            <HandCoins className="w-14 h-5 transition-transform duration-300 group-hover:scale-110" />
             <span className="transition-transform duration-300 group-hover:translate-x-1">
               Pledge
             </span>

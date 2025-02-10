@@ -16,17 +16,18 @@ import {
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
+import TaxCalculator from "../components/TaxCalculator";
 
 // Sample Data Array - yo chai pachi hatauda huncha...backend bata data fetch garera lyaune
 export const sampleUsers = [
   {
     index: 1,
     doneeId: "12345",
-    donorId: "67890",
+    donorId: null,
     phaseId: "3",
     nob: "Khatri Ceramics",
     totalAmount: "500000",
-    desc: "I need the aforementioned amount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
+    desc: "I need the amount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
     panNo: "775976",
     profilePic: "https://via.placeholder.com/150",
   },
@@ -55,7 +56,7 @@ export const sampleUsers = [
   {
     index: 4,
     doneeId: "11223",
-    donorId: "44556",
+    donorId: null,
     phaseId: "9",
     nob: "Solar Solutions",
     totalAmount: "900000",
@@ -66,7 +67,7 @@ export const sampleUsers = [
   {
     index: 5,
     doneeId: "11623",
-    donorId: "44656",
+    donorId: null,
     phaseId: "8",
     nob: "Wind Surfers",
     totalAmount: "50000",
