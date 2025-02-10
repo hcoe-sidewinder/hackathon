@@ -1,8 +1,8 @@
-function TradeCard({ user }) {
+function TradeCard({}) {
   return (
     <Box>
       <Card
-        key={user.doneeId || index}
+        key={index}
         sx={{
           boxShadow: 3,
           borderRadius: 2,
