@@ -7,8 +7,8 @@ import {
   ChevronRight,
   History,
 } from "lucide-react";
-import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
+import HistorySection from "../components/HistorySection";
 
 const ProfilePage = ({ user }) => {
   const auth2 = JSON.parse(localStorage.getItem("auth"));
@@ -138,10 +138,10 @@ const ProfilePage = ({ user }) => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent dropdown from closing
+                  e.stopPropagation();
                   setHistoryView("Donor");
                 }}
-                className={`px-4 py-2  rounded-md transition-all duration-300 ${
+                className={`px-4 py-2 rounded-md transition-all duration-300 ${
                   historyView === "Donor"
                     ? "bg-bgColor text-white"
                     : "bg-gray-300"
@@ -151,10 +151,10 @@ const ProfilePage = ({ user }) => {
               </button>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent dropdown from closing
+                  e.stopPropagation();
                   setHistoryView("Donee");
                 }}
-                className={`px-4 py-2 rounded-md bg-bgColor transition-all duration-300 ${
+                className={`px-4 py-2 rounded-md transition-all duration-300 ${
                   historyView === "Donee"
                     ? "bg-bgColor text-white"
                     : "bg-gray-300"
@@ -164,30 +164,11 @@ const ProfilePage = ({ user }) => {
               </button>
             </div>
 
-            {/* History Content Wrapper */}
-            <div className="relative h-40 overflow-hidden">
-              {/* Donor History */}
-              <div
-                className={`absolute top-0 left-0 w-full transition-transform duration-500 ${
-                  historyView === "Donor"
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-full opacity-0"
-                }`}
-              >
-                <p className="text-gray-700">Donor History Data...</p>
-              </div>
-
-              {/* Donee History */}
-              <div
-                className={`absolute top-0 left-0 w-full transition-transform duration-500 ${
-                  historyView === "Donee"
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-full opacity-0"
-                }`}
-              >
-                <p className="text-gray-700">Donee History Data...</p>
-              </div>
-            </div>
+            {/* Use the HistorySection component here */}
+            <HistorySection
+              historyView={historyView}
+              setHistoryView={setHistoryView}
+            />
           </div>
         </Section>
 
