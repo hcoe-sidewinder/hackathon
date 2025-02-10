@@ -7,7 +7,8 @@ import { CreditCard, Lock } from "lucide-react";
 import { useAuth } from "../context/authContext.jsx";
 
 const LoginPage = () => {
-  const authContent = useAuth();
+  const { auth, setAuth } = useAuth();
+  console.log("auth", auth);
   const navigate = useNavigate();
   const [user, setUser] = useState({
     panNumber: "",
@@ -39,9 +40,17 @@ const LoginPage = () => {
       );
 
       if (response.data.success) {
-        localStorage.setItem("auth_token", response.data.accessToken);
+        console.log(typeof response.data.data);
+        const string = JSON.stringify(response.data.data);
+
+        console.log(`String: ${string}, type: ${typeof string}`);
+        localStorage.setItem(
+          "auth",
+          String(JSON.stringify(response.data.data))
+        );
+
         console.log(response.data.data);
-        authContent.setAuth(response.data.data);
+        setAuth(response.data.data);
         toast.success("Login successful!");
         navigate("/home");
       }

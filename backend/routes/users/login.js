@@ -17,7 +17,10 @@ const login = async (req, res) => {
       });
     }
 
-    const loginUser = await User.findOne({ panNo: panNumber });
+    const loginUser = await User.findOne({ panNo: panNumber }).populate({
+      path: "bankId",
+      select: "bankName accName accNo",
+    });
     if (!loginUser) {
       return res.status(HTTP_STATUS_CODE.NOT_FOUND).json({
         message: "User does not exist",
