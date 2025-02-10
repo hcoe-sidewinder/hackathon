@@ -77,11 +77,14 @@ const HomePage = () => {
   useEffect(() => {
     console.log("Updated allTrades:", state.allTrades);
   }, [state.allTrades]);
+
   useEffect(() => {
     const getAllTasks = async () => {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}trade`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}trade`,
+        { withCredentials: true },
+        {}
+      );
       if (response.data.success) {
         console.log("Fetched trades data:", response.data.data);
         dispatch({ type: "set_allTrades", payload: response.data.data });
