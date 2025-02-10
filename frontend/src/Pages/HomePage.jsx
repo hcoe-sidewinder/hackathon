@@ -27,7 +27,7 @@ export const sampleUsers = [
     phaseId: "3",
     nob: "Khatri Ceramics",
     totalAmount: "500000",
-    desc: "I need the amount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
+    desc: "I need theamount to buy an electricity powered oven to replace the wood burning oven that I use to bake my pottery.",
     panNo: "775976",
     profilePic: "https://via.placeholder.com/150",
   },
