@@ -9,6 +9,16 @@ const completePhase = async (req, res) => {
     const phase = Number(req.params.phase);
     const userId = res.locals.userId;
 
+    const boqImage = req.body.boqImage;
+
+    if (!boqImage) {
+      console.log(`Boq Image is required to complete phase`);
+      return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({
+        message: "Boq Image is required to complete phase",
+        success: false,
+      });
+    }
+
     const trade = await Trade.findOne({ _id: tradeId }).populate({
       path: "phaseId",
       select: "phase amount boqImage completed",
@@ -66,7 +76,7 @@ const completePhase = async (req, res) => {
     await Phase.findByIdAndUpdate(
       { _id: phaseId.id },
       {
-        $set: { completed: true },
+        $set: { boqImage: boqImage, completed: true },
       },
     );
 
