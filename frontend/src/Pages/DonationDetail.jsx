@@ -3,10 +3,19 @@ import { useState } from "react";
 import PledgeModal from "../components/PledgeModal";
 
 import Modal from "../components/Modal";
-import { useNavigate } from "react-router";
-
+import { useLocation, useNavigate } from "react-router";
+import axios from "axios";
+import { useTrade } from "../context/tradeContext";
+import { toast } from "sonner";
 
 const DonationDetail = ({ donation, onBack }) => {
+  const { state, dispatch } = useTrade();
+  const location = useLocation();
+  const current = location.pathname;
+  console.log(current);
+  const tradeId = current.split("/")[2];
+  console.log(tradeId);
+
   const [showPledgeModal, setShowPledgeModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
@@ -44,13 +53,30 @@ const DonationDetail = ({ donation, onBack }) => {
     setShowOtpModal(true);
   };
 
-  const handleVerifyOtp = () => {
+  const handleVerifyOtp = async () => {
     if (otp === generatedOtp) {
       alert(
         `Payment of Rs. ${donation.paymentPhases[0]} to ${donation.companyName} Successful! Waiting for BOQ verification.`
       );
       setShowOtpModal(false);
-      navigate("/home");     
+      try {
+        const response = await axios.put(
+          `${import.meta.env.VITE_API_URL}trade/${trade._id}/pledge`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success) {
+          console.log(response.data.data);
+          dispatch({ type: "pledgeTrade", payload: response.data.data });
+          toast.success(response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+      navigate("/home");
     } else {
       alert("Incorrect OTP.");
     }
@@ -150,7 +176,6 @@ const DonationDetail = ({ donation, onBack }) => {
         />
       )}
 
-     
       {showPaymentModal && (
         <Modal
           title="Confirm Payment"
