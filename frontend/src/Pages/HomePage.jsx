@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TradeCard from "../components/TradeCard";
+import TradeCard from "../components/tradeCard";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
-import {
-  Box,
-  Button,
-  Typography,
-  Avatar,
-  AppBar,
-  Toolbar,
-} from "@mui/material";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
+import ChatBot from "./ChatBot";
+import { Box, Typography } from "@mui/material";
 import axios from "axios";
 import { useTrade } from "../context/tradeContext";
 
@@ -80,25 +73,23 @@ export const sampleUsers = [
 const defaultProfilePicture = "https://via.placeholder.com/150";
 
 const HomePage = () => {
-  const { state, dispatch } = useTrade();
+  const { dispatch } = useTrade();
+  useEffect(() => {
+    console.log("Updated allTrades:", state.allTrades);
+  }, [state.allTrades]);
   useEffect(() => {
     const getAllTasks = async () => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}trade`,
-        {},
-        {
-          Headers: {
-            Cookie: { access_token: localStorage.getItem("token") },
-          },
-        }
-      );
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}trade`, {
+        withCredentials: true,
+      });
       if (response.data.success) {
-        console.log(response.data.data);
+        console.log("Fetched trades data:", response.data.data);
         dispatch({ type: "set_allTrades", payload: response.data.data });
       }
     };
     getAllTasks();
-  }, []);
+  }, [dispatch]);
+
   useEffect(() => {
     const getdoneeTasks = async () => {
       const response = await axios.get(
@@ -106,12 +97,13 @@ const HomePage = () => {
         { withCredentials: true }
       );
       if (response.data.success) {
-        console.log(response.data.data);
+        //console.log(response.data.data);
         dispatch({ type: "set_doneeTrades", payload: response.data.data });
       }
     };
     getdoneeTasks();
-  }, []);
+  }, [dispatch]);
+
   useEffect(() => {
     const getdonorTasks = async () => {
       const response = await axios.get(
@@ -121,25 +113,26 @@ const HomePage = () => {
         }
       );
       if (response.data.success) {
-        console.log(response.data.data);
+        //console.log(response.data.data);
         dispatch({ type: "set_donorTrades", payload: response.data.data });
       }
     };
     getdonorTasks();
-  }, []);
+  }, [dispatch]);
   const authString = localStorage.getItem("auth");
   const auth = JSON.parse(authString);
   // console.log(auth);
   const navigate = useNavigate();
+
+  console.log(`State alltrades: ${state.allTrades[0]}`);
 
   // dubai donorId and doneeId vayeko cards filter garna
   const filteredCards = sampleUsers.filter(
     (card) => !(card.donorId && card.doneeId)
   );
 
-  const handleGoToDonateePage = () => {};
-  const handleLogout = () => {};
-  const handleGoToProfile = () => {};
+  console.log(`Filtered Cards: ${filteredCards}`);
+
   return (
     <Box>
       <Header />
@@ -171,18 +164,18 @@ const HomePage = () => {
             padding: 2,
           }}
         >
-          {filteredCards.map((user, index) => (
+          {filteredCards.map((trade, index) => (
             <TradeCard
               key={index}
-              index={user.index}
-              nob={user.nob}
-              phaseid={user.phaseId}
-              total={user.totalAmount}
-              desc={user.desc}
-              panno={user.panNo}
-              profilePic={user.profilePic || defaultProfilePicture}
-              donorId={user.donorId}
-              doneeId={user.doneeId}
+              index={trade.index}
+              nob={trade.nob}
+              phaseid={trade.phaseId.phase}
+              total={trade.totalAmount}
+              desc={trade.desc}
+              panno={trade.doneeId.panNo}
+              profilePic={trade.doneeId.profilePic}
+              donorId={trade.donorId._id}
+              doneeId={trade.doneeId._id}
               userId="67890" // esma chai user id rakhda bhayo
             />
           ))}
@@ -192,6 +185,8 @@ const HomePage = () => {
       <HowItWorks />
 
       <Footer />
+
+      <ChatBot />
     </Box>
   );
 };

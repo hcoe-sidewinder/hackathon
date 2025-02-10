@@ -1,19 +1,25 @@
 import { createContext, useContext, useReducer } from "react";
 import tradeReducer from "../Reducers/tradeReducers";
 
-const initialState = {
-  allTrades: [],
-  doneeTrades: [],
-  donorTrades: [],
-};
+// const initialState = {
+//   allTrades: [],
+//   doneeTrades: [],
+//   donorTrades: [],
+// };
 
-const TradeContext = createContext({
-  state: initialState,
-  dispatch: () => {},
-});
+// const TradeContext = createContext({
+//   // state: initialState,
+//   // dispatch: () => {},
+// });
+
+const TradeContext = createContext();
 
 export const TradeProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(tradeReducer, initialState);
+  const [state, dispatch] = useReducer(tradeReducer, {
+    allTrades: [],
+    doneeTrades: [],
+    donorTrades: [],
+  });
 
   return (
     <TradeContext.Provider value={{ state, dispatch }}>

@@ -6,7 +6,6 @@ import { Toaster } from "sonner";
 import { TradeProvider } from "./context/tradeContext.jsx";
 import { AuthProvider } from "./context/authContext.jsx";
 
-
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
@@ -19,5 +18,5 @@ createRoot(document.getElementById("root")).render(
         <App />
         <Toaster />
     </AuthProvider> */}
-  </StrictMode>
+  </StrictMode>,
 );

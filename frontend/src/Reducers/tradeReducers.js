@@ -1,17 +1,24 @@
-const initialState = {
-  allTrades: [],
-  doneeTrades: [],
-  donorTrades: [],
-};
-
-const tradeReducer = (state = initialState, action) => {
+const tradeReducer = (state, action) => {
+  // console.log("hello")
   switch (action.type) {
     case "set_allTrades":
-      return { ...state, allTrades: action.payload };
+      console.log("Previous State:", state);
+      console.log("New Payload:", action.payload);
+      // Ensure we're returning a new object with the updated allTrades
+      return {
+        ...state,
+        allTrades: Array.isArray(action.payload) ? action.payload : [],
+      };
     case "set_doneeTrades":
-      return { ...state, doneeTrades: action.payload };
+      return {
+        ...state,
+        doneeTrades: Array.isArray(action.payload) ? action.payload : [],
+      };
     case "set_donorTrades":
-      return { ...state, donorTrades: action.payload };
+      return {
+        ...state,
+        donorTrades: Array.isArray(action.payload) ? action.payload : [],
+      };
     case "addTrades":
       return {
         ...state,

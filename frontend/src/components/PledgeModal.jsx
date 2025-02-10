@@ -70,4 +70,5 @@ const PledgeModal = ({ donation, onClose, onProceedToPayment }) => {
   );
 };
 
-export default PledgeModal
+export default PledgeModal;
+
