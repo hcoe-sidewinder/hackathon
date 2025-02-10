@@ -53,6 +53,16 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    greenCredit: {
+      type: Number,
+      default: 0,
+    },
+
+    taxCredit: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true },
 );

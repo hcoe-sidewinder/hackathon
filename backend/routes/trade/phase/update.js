@@ -82,6 +82,35 @@ const completePhase = async (req, res) => {
 
     const lastPhase = phase == trade.phaseId.length;
 
+    if (lastPhase) {
+      const greenCredit = req.body.greenCredit;
+      const taxCredit = req.body.taxCredit;
+
+      if (!greenCredit || !taxCredit) {
+        console.log(
+          "Completion of last phase requires calculation of green and tax credits",
+        );
+
+        return res.status(HTTP_STATUS_CODE.BAD_REQUEST).json({
+          message:
+            "Completion of last phase requires calculation of green and tax credits",
+          success: false,
+        });
+      }
+
+      const nearCompleteTrade = await Trade.findById({ _id: tradeId });
+
+      await User.findByIdAndUpdate(
+        { _id: nearCompleteTrade.donorId },
+        { $inc: { taxCredit: taxCredit } },
+      );
+
+      await User.findByIdAndUpdate(
+        { _id: nearCompleteTrade.doneeId },
+        { $inc: { greenCredit: greenCredit } },
+      );
+    }
+
     const updatedTrade = await Trade.findByIdAndUpdate(
       { _id: tradeId },
       {
