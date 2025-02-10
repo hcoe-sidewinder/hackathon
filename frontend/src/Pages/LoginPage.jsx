@@ -46,6 +46,11 @@ const LoginPage = () => {
         navigate("/home");
       }
     }
+    catch(error){
+      console.log("login error:", error);
+      toast.error(error.response.data.message);
+    }
+  }
 
     return (
       <main className="min-h-screen bg-gradient-to-br from-bgColor to-transitionColor flex items-center justify-center">
