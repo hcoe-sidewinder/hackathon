@@ -3,10 +3,27 @@ import Trade from "../../models/trade.schema.js";
 
 export const getTrades = async (_req, res) => {
   try {
-    const trades = await Trade.find({}).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const trades = await Trade.find({})
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     console.log(`Fetched trades succesfully`);
     return res.status(HTTP_STATUS_CODE.OK).json({
@@ -27,10 +44,27 @@ export const getTradeById = async (req, res) => {
   try {
     const tradeId = req.params.tradeId;
 
-    const trade = await Trade.findOne({ _id: tradeId }).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const trade = await Trade.findOne({ _id: tradeId })
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     console.log(`Fetched trade by id succesfully`);
     return res.status(HTTP_STATUS_CODE.OK).json({
@@ -51,10 +85,27 @@ export const getByDonee = async (_req, res) => {
   try {
     const doneeId = res.locals.userId;
 
-    const trades = await Trade.find({ doneeId: doneeId }).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const trades = await Trade.find({ doneeId: doneeId })
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Get Trade by Donee successful",
@@ -74,10 +125,27 @@ export const getByDonor = async (_req, res) => {
   try {
     const donorId = res.locals.userId;
 
-    const trades = await Trade.find({ donorId: donorId }).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const trades = await Trade.find({ donorId: donorId })
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Get Trade by Donee successful",

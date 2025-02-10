@@ -14,7 +14,7 @@ const completePhase = async (req, res) => {
       select: "phase amount boqImage completed",
     });
 
-    if (userId !== trade.doneeId) {
+    if (userId != trade.doneeId) {
       console.log(`Only donee can complete phases`);
       return res
         .status(HTTP_STATUS_CODE.BAD_REQUEST)
@@ -63,10 +63,27 @@ const completePhase = async (req, res) => {
       },
     );
 
-    const updatedTrade = await Trade.findOne({ _id: tradeId }).populate({
-      path: "phaseId",
-      select: "phase amount boqImage completed",
-    });
+    const updatedTrade = await Trade.findOne({ _id: tradeId })
+      .populate({
+        path: "donorId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "doneeId",
+        select: "panNo name email nob phNo panImg profilePic bankId",
+        populate: {
+          path: "bankId",
+          select: "bankName accNo accName",
+        },
+      })
+      .populate({
+        path: "phaseId",
+        select: "phase amount boqImage completed",
+      });
 
     return res.status(HTTP_STATUS_CODE.OK).json({
       message: "Phase updated successfully",
